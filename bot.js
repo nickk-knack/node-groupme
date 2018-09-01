@@ -1,8 +1,8 @@
-const request = require('request');
+const req = require('request');
 const modules = [];
 
 const bot = {
-	request: request,
+	request: req,
 	api_url: 'https://api.groupme.com/v3/bots/',
 	bot_id: '',
 	group_id: '',
@@ -17,6 +17,7 @@ const bot = {
 };
 
 exports.onPost = (req, res) => {
+	console.log(req);
 	const message = {
 		text: req.body.text,
 		user: req.body.sender_id,
