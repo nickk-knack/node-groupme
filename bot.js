@@ -8,16 +8,15 @@ const bot = {
 	group_id: '',
 	sendMessage(text) {
 		const data = `${bot.api_url}post?bot_id=${bot.bot_id}&text=${encodeURIComponent(text)}`;
-		bot.request.post(data, (err) => {
-			if (err) {
-				console.error(err);
+		bot.request.post(data, (error, response, body) => {
+			if (error) {
+				console.error(error);
 			}
 		});
 	}
 };
 
 exports.onPost = (req, res) => {
-	console.log(req.text);
 	const message = {
 		text: req.body.text,
 		user: req.body.sender_id,
