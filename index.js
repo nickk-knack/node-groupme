@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const bot = require('./bot.js');
 
 const port = process.env.PORT || 3000;
@@ -9,6 +10,8 @@ bot.initialize({
 	group_id: process.env.GROUP_ID,
 	modules: ['giphy']
 });
+
+app.use(bodyParser.json());
 
 app.listen(port, () => {
 	console.log(`Server listening on port ${port}`);
