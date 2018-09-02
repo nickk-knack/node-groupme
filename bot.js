@@ -17,7 +17,7 @@ const bot = {
 };
 
 exports.onPost = (req, res) => {
-	console.log(req);
+	console.log(req.body);
 	const message = {
 		text: req.body.text,
 		user: req.body.sender_id,
