@@ -12,6 +12,8 @@ exports.process = (message, bot) => {
 
 		bot.request.get(url, (err, resp, body) => {
 			//const results = JSON.parse(body)['data'];
+			console.log(body);
+			console.log(JSON.parse(body));
 			
 			if (err || !body.length) {
 				console.error(err);
