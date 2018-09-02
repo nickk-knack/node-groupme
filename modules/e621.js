@@ -13,10 +13,12 @@ exports.process = (message, bot) => {
 			const results = JSON.parse(body)['data'];
 			
 			if (err || !results.length) {
+				console.error(err);
 				bot.sendMessage(`Nothing found for "${query}"`);
 			} else {
 				const indexSelected = Math.floor(Math.random() * results.length);
 				const selected = results[indexSelected].file_url;
+				console.log(selected);
 				bot.sendMessage(selected);
 			}
 		});
