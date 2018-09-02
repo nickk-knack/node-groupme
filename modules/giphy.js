@@ -16,7 +16,6 @@ exports.process = (message, bot) => {
 			} else {
 				const indexSelected = Math.floor(Math.random() * numResults);
 				const selected = results[indexSelected].images.original.url;
-				console.log(`${query} => ${selected}`);
 				bot.sendMessage(selected);
 			}
 		});

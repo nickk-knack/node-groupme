@@ -10,8 +10,7 @@ exports.process = (message, bot) => {
 			try {
 				const dieSides = parseInt(args[0]);
 				const roll = Math.floor(Math.random() * dieSides) + 1;
-				console.log(`${message.name} rolled a ${roll}`);
-				bot.sendMessage(`@${message.name} rolled a ${roll}`);
+				bot.sendMessage(`@${message.name} rolled ${roll}`);
 			} catch (e) {
 				console.error(e);
 			}
