@@ -8,16 +8,17 @@ exports.process = (message, bot) => {
 		const args = message.text.substring(index + command.length).split(' ');
 		const query = args.join('+');
 		const url = `https://e621.net/post/index.json?tags=${encodeURIComponent(query)}&limit=10`;
+		console.log(url);
 
 		bot.request.get(url, (err, resp, body) => {
-			const results = JSON.parse(body)['data'];
+			//const results = JSON.parse(body)['data'];
 			
-			if (err || !results.length) {
+			if (err || !body.length) {
 				console.error(err);
 				bot.sendMessage(`Nothing found for "${query}"`);
 			} else {
-				const indexSelected = Math.floor(Math.random() * results.length);
-				const selected = results[indexSelected].file_url;
+				const indexSelected = Math.floor(Math.random() * body.length);
+				const selected = body[indexSelected].file_url;
 				console.log(selected);
 				bot.sendMessage(selected);
 			}
