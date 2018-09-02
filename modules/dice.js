@@ -15,10 +15,6 @@ exports.process = (message, bot) => {
 			} catch (e) {
 				console.error(e);
 			}
-		} else {
-			const roll = Math.floor(Math.random() * 20) + 1;
-			console.log(`${message.name} rolled a ${roll}`);
-			bot.sendMessage(`@${message.name} rolled a ${roll}`);
 		}
 	}
 };
