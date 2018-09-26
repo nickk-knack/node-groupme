@@ -11,6 +11,7 @@ exports.process = (message, bot) => {
 				const dieSides = parseInt(args[0]);
 				if (dieSides <= 0) {
 					bot.sendMessage(`@${message.name} doesn't know how dice work.`);
+					return;
 				}
 				const roll = Math.floor(Math.random() * dieSides) + 1;
 				bot.sendMessage(`@${message.name} rolled ${roll}`);
