@@ -8,7 +8,7 @@ exports.process = (message, bot) => {
 		const url = 'http://inspirobot.me/api?generate=true';
 		bot.request.get(url, (err, resp, body) => {
 			if (err) {
-				bot.sendMessage('uh oh, something is fucky wucky UwU');
+				bot.sendMessage('oopsie woopsie, something is fucky wucky UwU');
 			} else {
 				bot.sendMessage(body);
 			}

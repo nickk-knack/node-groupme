@@ -5,6 +5,8 @@ const quotes = [
 	'No, that should not be 2 there.',
 	'If you overdose on male enhancement pills, does your dick explode?',
 	'Switches are so fucking sexy, UNF',
+	'Any deviation from my written solution will be cause for problems.',
+	'I bring mug with many handles. It explains circuits.',
 ];
 
 exports.process = (message, bot) => {
