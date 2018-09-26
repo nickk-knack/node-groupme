@@ -1,7 +1,7 @@
 exports.process = (message, bot) => {
 	if (message.is_bot) return;
 
-	const command = '.inspire ';
+	const command = '.inspire';
 	const index = message.text.toLowerCase().indexOf(command);
 
 	if (index != -1) {
@@ -17,5 +17,7 @@ exports.process = (message, bot) => {
 				bot.sendMessage(body);
 			}
 		});
+	} else {
+		console.log('did not find .inspire');
 	}
 };
