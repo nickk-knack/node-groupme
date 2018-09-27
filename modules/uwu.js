@@ -1,11 +1,15 @@
 exports.process = (message, bot) => {
 	if (message.is_bot) return;
 	
-	const command = '.uwu';
+	const command = '.uwu ';
 	const index = message.text.toLowerCase().indexOf(command);
 	
 	if (index != -1) {
 		const query = message.text.substring(index + command.length);
+		if (query == '') {
+			bot.sendMessage('UwU');
+			return;
+		}
 		query.split(' ').join('+');
 		const url = `https://e926.net/post/index.json?tag=${encodeURIComponent(query)}&limit=10`;
 		
