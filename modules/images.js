@@ -17,8 +17,6 @@ exports.process = (message, bot) => {
 			const randIndex = Math.floor(Math.random() * length);
 			result = images[randIndex].url;
 
-			console.log(result);
-
 			bot.sendMessage(result);
 		});
 	}
