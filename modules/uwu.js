@@ -23,23 +23,25 @@ exports.process = (message, bot) => {
 	
 	if (index != -1) {
 		const query = message.text.substring(index + command.length);
+		console.log('query', query);
 		if (query == '') {
 			bot.sendMessage('UwU');
 			return;
 		}
-		query.split(' ').join('+');
-		const url = `https://e926.net/post/index.json?tag=${encodeURIComponent(query)}&limit=10`;
+		const searchTerms = query.split(' ').join('+');
+		console.log('search terms', searchTerms);
+		const url = `https://e926.net/post/index.json?tag=${encodeURIComponent(searchTerms)}&limit=10`;
 		
 		bot.request.get(url, (err, resp, body) => {
 			const results = JSON.parse(body)['data'];
-			console.log(results);
+			console.log('results', results);
 			const numResults = (results.length < 10) ? results.length : 10;
 			if (err || numResults == 0) {
 				bot.sendMessage(`Nothing found for "${query}"`);
 			} else {
 				const indexSelected = Math.floor(Math.random() * numResults);
 				const selected = results[indexSelected].file_url;
-				console.log(selected);
+				console.log('selected', selected);
 				bot.sendMessage(selected);
 			}
 		});

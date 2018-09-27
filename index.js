@@ -8,8 +8,7 @@ const port = process.env.PORT || 3000;
 bot.initialize({
 	bot_id: process.env.BOT_ID,
 	group_id: process.env.GROUP_ID,
-	// temporarily disabled the uwu module
-	modules: ['giphy', 'dice', 'inspire', 'piao', 'images']
+	modules: ['giphy', 'dice', 'inspire', 'piao', 'images', 'uwu']
 });
 
 app.use(bodyParser.json());
