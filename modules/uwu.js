@@ -1,19 +1,4 @@
-// this shit is crashing at the JSON parsing, because its getting html back
-// undefined:1
-// <html>
-// ^
-// 
-// SyntaxError: Unexpected token < in JSON at position 0
-//     at JSON.parse (<anonymous>)
-//     at Request.bot.request.get [as _callback] (/app/modules/uwu.js:17:25)
-//     at Request.self.callback (/app/node_modules/request/request.js:185:22)
-//     at emitTwo (events.js:126:13)
-//     at Request.emit (events.js:214:7)
-//     at Request.<anonymous> (/app/node_modules/request/request.js:1161:10)
-//     at emitOne (events.js:116:13)
-//     at Request.emit (events.js:211:7)
-//     at IncomingMessage.<anonymous> (/app/node_modules/request/request.js:1083:12)
-//     at Object.onceWrapper (events.js:313:30)
+const snekfetch = require('snekfetch');
 
 exports.process = (message, bot) => {
 	if (message.is_bot) return;
@@ -22,29 +7,23 @@ exports.process = (message, bot) => {
 	const index = message.text.toLowerCase().indexOf(command);
 	
 	if (index != -1) {
-		const query = message.text.substring(index + command.length);
+		const query = message.text.substring(index + command.length).split(' ').join('+');
 		console.log('query', query);
 		if (query == '') {
 			bot.sendMessage('UwU');
 			return;
 		}
-		const searchTerms = query.split(' ').join('+');
-		console.log('search terms', searchTerms);
-		const url = `https://e926.net/post/index.json?tags=${searchTerms}&limit=10`;
-		
-		bot.request.get(url, (err, resp, body) => {
-			console.log('body', body);
-			const results = JSON.parse(body)['data'];
-			console.log('results', results);
-			const numResults = (results.length < 10) ? results.length : 10;
-			if (err || numResults == 0) {
-				bot.sendMessage(`Nothing found for "${query}"`);
-			} else {
-				const indexSelected = Math.floor(Math.random() * numResults);
-				const selected = results[indexSelected].file_url;
-				console.log('selected', selected);
-				bot.sendMessage(selected);
+
+		snekfetch.get('https://e926.net/post/index.json').query({ tags: query, limit: 10 }).then(body => {
+			if (!body.length || body.success == false) {
+				bot.sendMessage(`No results found for ${query}`);
+				return;
 			}
+
+			const randIndex = Math.floor(Math.random() * 10);
+			const result = body[randIndex].file_url;
+
+			bot.sendMessage(result);
 		});
 	}
 };
