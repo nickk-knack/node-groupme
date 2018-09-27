@@ -1,3 +1,20 @@
+// this shit is crashing at the JSON parsing, because its getting html back
+// undefined:1
+// <html>
+// ^
+// 
+// SyntaxError: Unexpected token < in JSON at position 0
+//     at JSON.parse (<anonymous>)
+//     at Request.bot.request.get [as _callback] (/app/modules/uwu.js:17:25)
+//     at Request.self.callback (/app/node_modules/request/request.js:185:22)
+//     at emitTwo (events.js:126:13)
+//     at Request.emit (events.js:214:7)
+//     at Request.<anonymous> (/app/node_modules/request/request.js:1161:10)
+//     at emitOne (events.js:116:13)
+//     at Request.emit (events.js:211:7)
+//     at IncomingMessage.<anonymous> (/app/node_modules/request/request.js:1083:12)
+//     at Object.onceWrapper (events.js:313:30)
+
 exports.process = (message, bot) => {
 	if (message.is_bot) return;
 	
