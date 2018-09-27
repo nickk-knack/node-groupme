@@ -5,6 +5,11 @@ const bot = require('./bot.js');
 
 const port = process.env.PORT || 3000;
 
+console.log(process.env);
+for (let item of process.env) {
+	console.log(item);
+}
+
 bot.initialize({
 	bot_id: process.env.BOT_ID,
 	group_id: process.env.GROUP_ID,
