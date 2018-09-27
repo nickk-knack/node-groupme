@@ -8,7 +8,6 @@ exports.process = (message, bot) => {
 	
 	if (index != -1) {
 		const query = message.text.substring(index + command.length).split(' ').join('+');
-		console.log('query', query);
 		if (query == '') {
 			bot.sendMessage('UwU');
 			return;
@@ -17,17 +16,19 @@ exports.process = (message, bot) => {
 		snekfetch.get('https://e926.net/post/index.json').query({ tags: query, limit: 10 })
 			.then(data => data.body)
 			.then(body => {
-				console.log(body);
-
 				if (!body.length || body.success == false) {
 					bot.sendMessage(`No results found for ${query}`);
 					return;
 				}
 
-				const randIndex = Math.floor(Math.random() * 10);
+				const randIndex = Math.floor(Math.random() * body.length);
 				const result = body[randIndex].file_url;
 
 				bot.sendMessage(result);
+			})
+			.catch(e => {
+				bot.sendMessage('oopsie woopse, someone made a fuckie wuckie!! uwu');
+				console.log(e);
 			});
 	}
 };
