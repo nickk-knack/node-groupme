@@ -1,7 +1,7 @@
 exports.process = (message, bot) => {
 	if (message.is_bot) return;
 	
-	const command = '.uwu ';
+	const command = '.uwu';
 	const index = message.text.toLowerCase().indexOf(command);
 	
 	if (index != -1) {
@@ -10,7 +10,7 @@ exports.process = (message, bot) => {
 		const url = `https://e926.net/post/index.json?tag=${encodeURIComponent(query)}&limit=10`;
 		
 		bot.request.get(url, (err, resp, body) => {
-			const results = JSON.parse(body);
+			const results = JSON.parse(body)['data'];
 			console.log(results);
 			const numResults = (results.length < 10) ? results.length : 10;
 			if (err || numResults == 0) {
