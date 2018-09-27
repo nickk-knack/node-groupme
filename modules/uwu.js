@@ -15,6 +15,7 @@ exports.process = (message, bot) => {
 		}
 
 		snekfetch.get('https://e926.net/post/index.json').query({ tags: query, limit: 10 }).then(body => {
+			console.log(body);
 			if (!body.length || body.success == false) {
 				bot.sendMessage(`No results found for ${query}`);
 				return;
