@@ -14,17 +14,20 @@ exports.process = (message, bot) => {
 			return;
 		}
 
-		snekfetch.get('https://e926.net/post/index.json').query({ tags: query, limit: 10 }).then(body => {
-			console.log(body);
-			if (!body.length || body.success == false) {
-				bot.sendMessage(`No results found for ${query}`);
-				return;
-			}
+		snekfetch.get('https://e926.net/post/index.json').query({ tags: query, limit: 10 })
+			.then(data => data.body)
+			.then(body => {
+				console.log(body);
 
-			const randIndex = Math.floor(Math.random() * 10);
-			const result = body[randIndex].file_url;
+				if (!body.length || body.success == false) {
+					bot.sendMessage(`No results found for ${query}`);
+					return;
+				}
 
-			bot.sendMessage(result);
-		});
+				const randIndex = Math.floor(Math.random() * 10);
+				const result = body[randIndex].file_url;
+
+				bot.sendMessage(result);
+			});
 	}
 };
