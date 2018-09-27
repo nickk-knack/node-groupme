@@ -30,10 +30,9 @@ exports.process = (message, bot) => {
 		}
 		const searchTerms = query.split(' ').join('+');
 		console.log('search terms', searchTerms);
-		const url = `https://e926.net/post/index.json?tag=${encodeURIComponent(searchTerms)}&limit=10`;
+		const url = `https://e926.net/post/index.json?tags=${encodeURIComponent(searchTerms)}&limit=10`;
 		
 		bot.request.get(url, (err, resp, body) => {
-			console.log('resp', resp);
 			console.log('body', body);
 			const results = JSON.parse(body)['data'];
 			console.log('results', results);
