@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 bot.initialize({
 	bot_id: process.env.BOT_ID,
 	group_id: process.env.GROUP_ID,
-	modules: ['help', 'giphy', 'dice', 'inspire', 'piao', 'images', 'uwu', 'thank']
+	modules: ['help', 'giphy', 'dice', 'inspire', 'piao', 'images', 'uwu', 'thank', 'bad']
 });
 
 app.use(bodyParser.json());
