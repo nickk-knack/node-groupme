@@ -5,10 +5,9 @@ module.exports = {
 	description: 'Search e621',
 	args: true,
 	usage: '<tags>',
-	guildOnly: false,
 	cooldown: 5,
 	execute(message, args, bot) {
-		const query = args.split(' ').join('+');
+		const query = args.join('+');
 		if (query == '') {
 			bot.sendMessage('UwU');
 			return;

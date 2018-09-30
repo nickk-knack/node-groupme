@@ -8,7 +8,7 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
-		const query = args.split(' ').join('+');
+		const query = args.join('+');
 		if (query == '') {
 			bot.sendMessage('UwU');
 			return;
