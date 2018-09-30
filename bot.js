@@ -22,7 +22,7 @@ const bot = {
 
 exports.onPost = (req, res) => {
 	// TEMP: for debugging
-	console.log(req);
+	//console.log(req);
 
 	// Create message object from input
 	const message = {
@@ -49,6 +49,7 @@ exports.onPost = (req, res) => {
 	// Get command args and name
 	const [, matchedPrefix] = message.text.match(prefixRegex);
 	const args = message.text.slice(matchedPrefix.length).split(/ +/);
+	console.log(args);
 	const commandName = args.shift();
 
 	// Get the actual command object, check if it exists
