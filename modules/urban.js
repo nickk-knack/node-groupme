@@ -20,8 +20,8 @@ module.exports = {
 				const [answer] = body.list;
 				let msg = '';
 				msg += `${answer.word}: \n`;
-				msg += `Definition: ${trim(answer.definition, 256)}\n`;
-				msg += `Example: ${answer.example}\n`;
+				msg += `Definition: ${trim(answer.definition, 512)}\n`;
+				msg += `Example: ${trim(answer.example, 256)}\n`;
 				bot.sendMessage(msg);
 			});		
 	},
