@@ -29,7 +29,7 @@ module.exports = {
 			let msg = `${command.name}:\n`;
 
 			if (command.description) {
-				msg += `${command.description}`;
+				msg += `${command.description} `;
 			}
 
 			if (command.aliases) {

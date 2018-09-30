@@ -23,7 +23,7 @@ const items = ['a giant fish',
 
 module.exports = {
 	name: 'slap',
-	description: 'Virtually slaps a user',
+	description: 'Virtually slaps a user.',
 	usage: '<user>',
 	args: false,
 	cooldown: 1,
@@ -33,7 +33,7 @@ module.exports = {
 			return;
 		}
 
-		const user = args[0];
+		const user = args.join(' ');
 		let item = items[Math.floor(Math.random() * items.length)];
 
 		bot.sendMessage(`*slaps ${user} with ${item}!*`);
