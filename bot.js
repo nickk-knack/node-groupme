@@ -44,7 +44,7 @@ exports.onPost = (req, res) => {
 	console.log('message wasn\'t bot');
 
 	// Check that its a command
-	const prefixRegex = new RegExp(`^(<@!?bot> |\\${prefix})\\s*`);
+	const prefixRegex = new RegExp(`^(\\${prefix})\\s*`);
 	if (!prefixRegex.test(message.text)) {
 		// anything else i want to check for that wouldn't be a command goes here
 		console.log('not a command');
