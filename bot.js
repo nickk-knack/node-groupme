@@ -6,7 +6,7 @@ const commandFiles = fs.readdirSync('./modules');
 const cooldowns = new Map();
 
 // Add a find function to the Map object (because it doesn't exist in vanilla JS for some reason)
-Map.prototype.find = function (func, value) {
+Map.prototype.find = function (func) {
 	if (typeof func === 'function') {
 		for (const [key, val] of this) {
 			if (func(val, key, this)) return val;
