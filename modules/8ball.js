@@ -36,6 +36,10 @@ module.exports = {
 			return;
 		}
 
+		if (args.join(' ').toLowerCase() == 'am i stupid?') {
+			bot.sendMessage('\u22c5.\u22c5');
+		}
+
 		const response = responses[Math.floor(Math.random() * responses.length)];
 		bot.sendMessage(`@${message.name}, ${response}`);
 	}
