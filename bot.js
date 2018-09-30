@@ -5,6 +5,19 @@ const commandModules = new Map();
 const commandFiles = fs.readdirSync('./modules');
 const cooldowns = new Map();
 
+// Add a find function to the Map object (because it doesn't exist in vanilla JS for some reason)
+Map.prototype.find = function (func, value) {
+	if (typeof func === 'function') {
+		for (const [key, val] of this) {
+			if (func(val, key, this)) return val;
+		}
+		return null;
+	}
+	else {
+		throw new Error('First argument must be a function.');
+	}
+};
+
 const bot = {
 	request: req,
 	api_url: 'https://api.groupme.com/v3/bots/',
@@ -32,27 +45,19 @@ exports.onPost = (req, res) => {
 		is_bot: req.body.sender_type === 'bot'
 	};
 
-	console.log('got message');
-
 	// Don't react to messages from bots
 	if (message.is_bot) {
-		console.log('message was bot');
 		res.end();
 		return;
 	}
-
-	console.log('message wasn\'t bot');
 
 	// Check that its a command
 	const prefixRegex = new RegExp(`^(\\${prefix})\\s*`);
 	if (!prefixRegex.test(message.text)) {
 		// anything else i want to check for that wouldn't be a command goes here
-		console.log('not a command');
 		res.end();
 		return;
 	}
-
-	console.log('message was a command');
 
 	// Get command args and name
 	const [, matchedPrefix] = message.text.match(prefixRegex);
@@ -68,8 +73,6 @@ exports.onPost = (req, res) => {
 		return;
 	}
 
-	console.log('got command: ', command);
-
 	// Check if args are required
 	if (command.args && !args.length) {
 		let reply = `@${message.name} You didn't provide any arguments.`;
@@ -82,8 +85,6 @@ exports.onPost = (req, res) => {
 		res.end();
 		return;
 	}
-
-	console.log('executing command');
 
 	// Execute command
 	if (!cooldowns.has(command.name)) {
@@ -119,8 +120,6 @@ exports.onPost = (req, res) => {
 		console.error(error);
 		bot.sendMessage('There was an error executing that command. :(');
 	}
-
-	console.log('done with command parsing');
 
 	res.end();
 };
