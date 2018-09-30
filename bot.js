@@ -62,7 +62,7 @@ exports.onPost = (req, res) => {
 	// Get command args and name
 	const [, matchedPrefix] = message.text.match(prefixRegex);
 	const args = message.text.slice(matchedPrefix.length).split(/ +/);
-	const commandName = args.shift();
+	const commandName = args.shift().toLowerCase();
 
 	// Get the actual command object, check if it exists
 	const command = commandModules.get(commandName) || commandModules.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
