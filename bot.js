@@ -45,6 +45,8 @@ exports.onPost = (req, res) => {
 		is_bot: req.body.sender_type === 'bot'
 	};
 
+	console.log(`[${message.name} (${message.sender_id})]: ${message.text}`);
+
 	// Don't react to messages from bots
 	if (message.is_bot) {
 		res.end();
@@ -55,6 +57,9 @@ exports.onPost = (req, res) => {
 	const prefixRegex = new RegExp(`^(\\${prefix})\\s*`);
 	if (!prefixRegex.test(message.text)) {
 		// anything else i want to check for that wouldn't be a command goes here
+		if (message.text.contains('epic')) {
+			bot.sendMessage('ok now THIS is epic');
+		}
 		res.end();
 		return;
 	}
