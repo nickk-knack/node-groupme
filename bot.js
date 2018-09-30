@@ -24,6 +24,7 @@ const bot = {
 	api_url: 'https://api.groupme.com/v3/bots/',
 	bot_id: '',
 	group_id: '',
+	commands: commandModules,
 	sendMessage(text) {
 		const data = `${bot.api_url}post?bot_id=${bot.bot_id}&text=${encodeURIComponent(text)}`;
 		bot.request.post(data, (error) => {

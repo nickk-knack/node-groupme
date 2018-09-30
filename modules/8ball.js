@@ -23,13 +23,19 @@ const responses = [
 	'Grilled cheese'
 ];
 
-exports.process = (message, bot) => {
-	if (message.is_bot) return;
+module.exports = {
+	name: '8ball',
+	aliases: ['8'],
+	description: 'Ask the magic 8-ball a question.',
+	usage: '<question>',
+	args: false,
+	cooldown: 10,
+	execute(message, args, bot) {
+		if (!args.length) {
+			bot.sendMessage(`@${message.name}, you gonna ask a question?`);
+			return;
+		}
 
-	const command = '.8ball ';
-	const index = message.text.toLowerCase().indexOf(command);
-
-	if (index != -1) {
 		const response = responses[Math.floor(Math.random() * responses.length)];
 		bot.sendMessage(`@${message.name}, ${response}`);
 	}
