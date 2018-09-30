@@ -60,6 +60,12 @@ exports.onPost = (req, res) => {
 		if (message.text.toLowerCase().includes('epic')) {
 			bot.sendMessage('ok now THIS is epic');
 		}
+		if (message.sender_id == 32344351) {
+			const rand = Math.floor(Math.random() * 1000) + 1;
+			if (rand > 990) {
+				bot.sendMessage('fuck off, andrew');
+			}
+		}
 		res.end();
 		return;
 	}
