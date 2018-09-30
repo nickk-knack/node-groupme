@@ -5,7 +5,7 @@ const GoogleCSEID = process.env.GOOGLE_CSE_ID;
 module.exports = {
 	name: 'image',
 	aliases: ['i'],
-	description: 'Search Google Images',
+	description: 'Search Google Images.',
 	usage: '<search terms>',
 	args: true,
 	cooldown: 3,
