@@ -29,15 +29,15 @@ module.exports = {
 			let msg = `${command.name}:\n`;
 
 			if (command.description) {
-				msg += `${command.description} `;
+				msg += `${command.description}\n`;
 			}
 
 			if (command.aliases) {
-				msg += `Aliases: ${command.aliases.join(', ')}. `;
+				msg += `Aliases: ${command.aliases.join(', ')}\n`;
 			}
 
 			if (command.usage) {
-				msg += `Usage: ${prefix}${command.name} ${command.usage}. `;
+				msg += `Usage: ${prefix}${command.name} ${command.usage}\n`;
 			}
 
 			msg += `Cooldown: ${command.cooldown || 1} second(s).`;
