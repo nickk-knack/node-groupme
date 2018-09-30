@@ -18,6 +18,7 @@ Map.prototype.find = function (func, value) {
 	}
 };
 
+// Bot object
 const bot = {
 	request: req,
 	api_url: 'https://api.groupme.com/v3/bots/',
@@ -33,6 +34,7 @@ const bot = {
 	}
 };
 
+// Handler for when a message is received
 exports.onPost = (req, res) => {
 	// TEMP: for debugging
 	//console.log(req);
@@ -62,7 +64,6 @@ exports.onPost = (req, res) => {
 	// Get command args and name
 	const [, matchedPrefix] = message.text.match(prefixRegex);
 	const args = message.text.slice(matchedPrefix.length).split(/ +/);
-	console.log('args:', args);
 	const commandName = args.shift();
 
 	// Get the actual command object, check if it exists
@@ -124,6 +125,7 @@ exports.onPost = (req, res) => {
 	res.end();
 };
 
+// Function for initializing the bot
 exports.initialize = (values) => {
 	// Check that we have a bot_id and group_id
 	let err = false;
