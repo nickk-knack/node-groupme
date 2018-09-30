@@ -32,24 +32,32 @@ exports.onPost = (req, res) => {
 		is_bot: req.body.sender_type === 'bot'
 	};
 
+	console.log('got message');
+
 	// Don't react to messages from bots
 	if (message.is_bot) {
+		console.log('message was bot');
 		res.end();
 		return;
 	}
+
+	console.log('message wasn\'t bot');
 
 	// Check that its a command
 	const prefixRegex = new RegExp(`^\\${prefix}*`);
 	if (!prefixRegex.test(message.text)) {
 		// anything else i want to check for that wouldn't be a command goes here
+		console.log('not a command');
 		res.end();
 		return;
 	}
 
+	console.log('message was a command');
+
 	// Get command args and name
 	const [, matchedPrefix] = message.text.match(prefixRegex);
 	const args = message.text.slice(matchedPrefix.length).split(/ +/);
-	console.log(args);
+	console.log('args:', args);
 	const commandName = args.shift();
 
 	// Get the actual command object, check if it exists
@@ -59,6 +67,8 @@ exports.onPost = (req, res) => {
 		res.end();
 		return;
 	}
+
+	console.log('got command: ', command);
 
 	// Check if args are required
 	if (command.args && !args.length) {
@@ -72,6 +82,8 @@ exports.onPost = (req, res) => {
 		res.end();
 		return;
 	}
+
+	console.log('executing command');
 
 	// Execute command
 	if (!cooldowns.has(command.name)) {
@@ -107,6 +119,8 @@ exports.onPost = (req, res) => {
 		console.error(error);
 		bot.sendMessage('There was an error executing that command. :(');
 	}
+
+	console.log('done with command parsing');
 
 	res.end();
 };
