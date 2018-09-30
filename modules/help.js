@@ -1,5 +1,13 @@
 const prefix = process.env.PREFIX || '.';
 
+Map.prototype.map = function (fn, thisArg) {
+	if (thisArg) fn = fn.bind(thisArg);
+	const arr = new Array(this.size);
+	let i = 0;
+	for (const [key, val] of this) arr[i++] = fn(val, key, this);
+	return arr;
+};
+
 module.exports = {
 	name: 'help',
 	aliases: ['commands'],
@@ -8,9 +16,10 @@ module.exports = {
 	args: false,
 	cooldown: 10,
 	execute(message, args, bot) {
+		const { commands } = bot;
 		if (!args.length) {
-			bot.sendMessage(`Commands: ${bot.commands.map(cmd => cmd.name)}`);
-		}
+			bot.sendMessage(`Commands: ${commands.map(cmd => cmd.name)}`);
+		} 
 		else {
 			if (!bot.commands.has(args[0])) {
 				return bot.sendMessage(`@${message.name} "${args[0]}" is not a valid command!`);
