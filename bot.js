@@ -129,7 +129,7 @@ exports.initialize = (values) => {
 
 	// Load all command modules
 	for (const file of commandFiles) {
-		const command = require(`./commands/${file}`);
+		const command = require(`./modules/${file}`);
 		commandModules.set(command.name, command);
 	}
 
