@@ -10,6 +10,8 @@ module.exports = {
 	execute(message, args, bot) {
 		const contentType = args.shift().toLowerCase();
 
+		console.log(contentType);
+
 		if (contentType != 'gif' || contentType != 'vid') {
 			bot.sendMessage(`@${message.name} you need to specify if you want a gif or a vid.`);
 			return;
