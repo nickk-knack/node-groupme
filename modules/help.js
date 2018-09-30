@@ -24,9 +24,9 @@ module.exports = {
 			if (!bot.commands.has(args[0])) {
 				return bot.sendMessage(`@${message.name} "${args[0]}" is not a valid command!`);
 			}
-
-			let msg = `${command.name}:\n`;
+			
 			const command = bot.commands.get(args[0]);
+			let msg = `${command.name}:\n`;
 
 			if (command.description) {
 				msg += `${command.description}`;
