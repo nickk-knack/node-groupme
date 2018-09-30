@@ -34,12 +34,7 @@ module.exports = {
 		}
 
 		const user = args[0];
-		args.shift();
 		let item = items[Math.floor(Math.random() * items.length)];
-		if (args[0]) {
-			// get rest of args, concat into string, make that the thing to slap with
-			item = args.join(' ');
-		}
 
 		bot.sendMessage(`*slaps ${user} with ${item}!*`);
 	},
