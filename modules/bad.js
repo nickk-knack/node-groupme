@@ -1,10 +1,10 @@
-exports.process = (message, bot) => {
-	if (message.is_bot) return;
-
-	const command = '.bad';
-	const index = message.text.toLowerCase().indexOf(command);
-
-	if (index != -1) {
+module.exports = {
+	name: 'bad',
+	aliases: ['fuckoff'],
+	description: 'Reprimand the bot.',
+	args: false,
+	cooldown: 1,
+	execute(message, args, bot) {
 		bot.sendMessage(':(');
-	}
+	},
 };

@@ -1,13 +1,14 @@
-exports.process = (message, bot) => {
-	if (message.is_bot) return;
-	
-	const command = '.giphy ';
-	const index = message.text.toLowerCase().indexOf(command);
-	
-	if (index != -1) {
-		const query = message.text.substring(index + command.length);
+module.exports = {
+	name: 'giphy',
+	aliases: ['gif'],
+	description: 'Search Giphy for a gif.',
+	usage: '<search terms>',
+	args: false,
+	cooldown: 10,
+	execute(message, args, bot) {
+		const query = args.join(' ');
 		const url = `http://api.giphy.com/v1/gifs/search?limit=5&q=${encodeURIComponent(query)}&api_key=dc6zaTOxFJmzC`;
-		
+
 		bot.request.get(url, (err, resp, body) => {
 			const results = JSON.parse(body)['data'];
 			const numResults = (results.length < 5) ? results.length : 5;
@@ -19,5 +20,5 @@ exports.process = (message, bot) => {
 				bot.sendMessage(selected);
 			}
 		});
-	}
+	},
 };

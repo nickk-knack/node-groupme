@@ -1,13 +1,14 @@
 const snekfetch = require('snekfetch');
 
-exports.process = (message, bot) => {
-	if (message.is_bot) return;
-	
-	const command = '.uwu ';
-	const index = message.text.toLowerCase().indexOf(command);
-	
-	if (index != -1) {
-		const query = message.text.substring(index + command.length).split(' ').join('+');
+module.exports = {
+	name: 'uwu',
+	aliases: ['e926'],
+	description: 'Searches e621',
+	usage: '<search tags>',
+	args: true,
+	cooldown: 3,
+	execute(message, args, bot) {
+		const query = args.split(' ').join('+');
 		if (query == '') {
 			bot.sendMessage('UwU');
 			return;
@@ -30,5 +31,5 @@ exports.process = (message, bot) => {
 				bot.sendMessage('oopsie woopse, someone made a fuckie wuckie!! uwu');
 				console.log(e);
 			});
-	}
+	},
 };

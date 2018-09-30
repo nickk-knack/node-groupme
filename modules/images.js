@@ -2,14 +2,15 @@ const GoogleImages = require('google-images');
 const GoogleAPIKey = process.env.GOOGLE_API_KEY;
 const GoogleCSEID = process.env.GOOGLE_CSE_ID;
 
-exports.process = (message, bot) => {
-	if (message.is_bot) return;
-	
-	const command = '.image ';
-	const index = message.text.toLowerCase().indexOf(command);
-	
-	if (index != -1) {
-		const query = message.text.substring(index + command.length);
+module.exports = {
+	name: 'image',
+	aliases: ['i'],
+	description: 'Search Google Images',
+	usage: '<search terms>',
+	args: true,
+	cooldown: 3,
+	execute(message, args, bot) {
+		const query = args.join(' ');
 		const client = new GoogleImages(GoogleCSEID, GoogleAPIKey);
 
 		let result;
@@ -20,5 +21,5 @@ exports.process = (message, bot) => {
 
 			bot.sendMessage(result);
 		});
-	}
+	},
 };

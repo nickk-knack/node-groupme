@@ -1,10 +1,13 @@
-exports.process = (message, bot) => {
-	if (message.is_bot) return;
+// TODO: add more responses
+const responses = [''];
 
-	const command = '.thank';
-	const index = message.text.toLowerCase().indexOf(command);
-
-	if (index != -1) {
+module.exports = {
+	name: 'thank',
+	aliases: ['thanks'],
+	description: 'Thank the bot.',
+	args: false,
+	cooldown: 1,
+	execute(message, args, bot) {
 		bot.sendMessage(`@${message.name} ur welcome`);
-	}
+	},
 };

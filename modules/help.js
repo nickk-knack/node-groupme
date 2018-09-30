@@ -1,3 +1,5 @@
+// TODO: remake with dynamic command help
+
 module.exports = {
 	name: 'help',
 	aliases: ['commands'],

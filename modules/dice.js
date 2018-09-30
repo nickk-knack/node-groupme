@@ -1,23 +1,32 @@
-exports.process = (message, bot) => {
-	if (message.is_bot) return;
-
-	const command = '.d ';
-	const index = message.text.toLowerCase().indexOf(command);
-
-	if (index != -1) {
-		const args = message.text.substring(index + command.length).split(' ');
+module.exports = {
+	name: 'dice',
+	aliases: ['d'],
+	description: 'Roll an n-sided die.',
+	usage: '[sides]',
+	args: false,
+	cooldown: 3,
+	execute(message, args, bot) {
+		let dice = 20;
 		if (args.length) {
-			try {
-				const dieSides = parseInt(args[0]);
-				if (dieSides <= 0) {
-					bot.sendMessage(`@${message.name} doesn't know how dice work.`);
-					return;
-				}
-				const roll = Math.floor(Math.random() * dieSides) + 1;
-				bot.sendMessage(`@${message.name} rolled ${roll}`);
-			} catch (e) {
-				console.error(e);
+			const tryDice = parseInt(args[0]);
+			if (!isNaN(tryDice)) {
+				dice = tryDice;
 			}
 		}
-	}
+
+		if (dice <= 0) {
+			bot.sendMessage(`@${message.name} doesn't know how dice work.`);
+			return;
+		}
+
+		const roll = Math.floor((Math.random() * dice) + 1);
+		let replyAppend = '';
+		if (roll == 1) {
+			replyAppend = 'Critical fail!';
+		}
+		else if (roll == dice) {
+			replyAppend = 'Critical success!';
+		}
+		bot.sendMessage(`@${message.name} rolled a ${roll}. ${replyAppend}`);
+	},
 };
