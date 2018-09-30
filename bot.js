@@ -36,9 +36,6 @@ const bot = {
 
 // Handler for when a message is received
 exports.onPost = (req, res) => {
-	// TEMP: for debugging
-	//console.log(req);
-
 	// Create message object from input
 	const message = {
 		text: req.body.text,
