@@ -18,7 +18,7 @@ module.exports = {
 	execute(message, args, bot) {
 		const { commands } = bot;
 		if (!args.length) {
-			bot.sendMessage(`Commands: ${commands.map(cmd => cmd.name)}`);
+			bot.sendMessage(`Commands: ${commands.map(cmd => cmd.name).join(', ')}\n You can send ${prefix}help [command name] for info on a specific command.`);
 		} 
 		else {
 			if (!bot.commands.has(args[0])) {
