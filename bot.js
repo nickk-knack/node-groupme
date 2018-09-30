@@ -57,7 +57,7 @@ exports.onPost = (req, res) => {
 	const prefixRegex = new RegExp(`^(\\${prefix})\\s*`);
 	if (!prefixRegex.test(message.text)) {
 		// anything else i want to check for that wouldn't be a command goes here
-		if (message.text.includes('epic')) {
+		if (message.text.toLowerCase().includes('epic')) {
 			bot.sendMessage('ok now THIS is epic');
 		}
 		res.end();
