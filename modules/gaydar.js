@@ -28,8 +28,6 @@ module.exports = {
 		const normalizedVal = normalizeHash(nameHash);
 		const gay = (normalizedVal >= 0.85);
 
-		console.log(`name: ${name}\nnameHash: ${nameHash}\nnormalizedVal: ${normalizedVal}\ngay: ${gay}`);
-
 		bot.sendMessage(`${name} is ${gay ? 'totally' : 'not'} gay.`);
 	},
 };
