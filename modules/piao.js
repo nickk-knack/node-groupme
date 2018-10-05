@@ -9,6 +9,7 @@ const quotes = [
 	'I bring mug with many handles. It explains circuits.',
 	'Give me lamp, brother.',
 	'STARE. STARE AT THIS.',
+	'I want to inject something useful into you.',
 ];
 
 module.exports = {
