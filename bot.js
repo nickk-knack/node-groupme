@@ -65,6 +65,21 @@ exports.onPost = (req, res) => {
 			const rand = Math.floor(Math.random() * 1000) + 1;
 			if (rand > 990) {
 				bot.sendMessage('fuck off, andrew');
+			} else if (message.sender_id == 23245751) {
+				const rand = Math.floor(Math.random() * 1000) + 1;
+				if (rand > 990) {
+					bot.sendMessage('nick is a bitch');
+				}
+			} else if (message.sender_id == 37488539) {
+				const rand = Math.floor(Math.random() * 1000) + 1;
+				if (rand > 990) {
+					bot.sendMessage('go photoshop a bigger dick on yourself, jake');
+				}
+			} else if (message.sender_id == 38353365) {
+				const rand = Math.floor(Math.random() * 1000) + 1;
+				if (rand > 990) {
+					bot.sendMessage('max, shouldn\'t you be on call? lil ho');
+				}
 			}
 		}
 		res.end();
