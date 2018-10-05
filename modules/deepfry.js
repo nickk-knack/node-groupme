@@ -16,26 +16,33 @@ module.exports = {
 			return;
 		}
 
-		console.log(message.attachments[0].url);
-
 		jimp.read(message.attachments[0].url)
 			.then(image => {
 				console.log('editing image');
+				console.log('get dimensions');
 				const currentW = image.getWidth();
 				const currentH = image.getHeight();
 
+				console.log('edit color');
 				image.color([
 					{ apply: 'red', params: [69] },
 					{ apply: 'saturate', params: [69]}
 				]);
+				console.log('posterize');
 				image.posterize(4);
+				console.log('brightness');
 				image.brightness(0.4);
+				console.log('contrast');
 				image.contrast(0.3);
+				console.log('blur');
 				image.blur(2);
+				console.log('resize 1');
 				image.resize(169, 169);
+				console.log('resize 2');
 				image.resize(currentW, currentH);
 
-				image.write(`../deepfry-${Date.now()}`);
+				console.log('write image');
+				image.write(`./deepfry-${Date.now()}`);
 
 				bot.sendMessage('wrote image');
 			})
