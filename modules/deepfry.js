@@ -23,11 +23,11 @@ module.exports = {
 				const currentW = image.getWidth();
 				const currentH = image.getHeight();
 
-				console.log('edit color');
-				image.color([
-					{ apply: 'red', params: [69] },
-					{ apply: 'saturate', params: [69]}
-				]);
+				// console.log('edit color');
+				// image.color([
+				// 	{ apply: 'red', params: [69] },
+				// 	{ apply: 'saturate', params: [69]}
+				// ]);
 				console.log('posterize');
 				image.posterize(4);
 				console.log('brightness');
@@ -45,6 +45,8 @@ module.exports = {
 				image.write(`./deepfry-${Date.now()}`);
 
 				bot.sendMessage('wrote image');
+
+				// write to buffer instead?
 			})
 			.catch(e => {
 				console.error(e);
