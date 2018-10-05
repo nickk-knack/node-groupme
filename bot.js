@@ -42,7 +42,8 @@ exports.onPost = (req, res) => {
 		text: req.body.text,
 		sender_id: req.body.sender_id,
 		name: req.body.name,
-		is_bot: req.body.sender_type === 'bot'
+		is_bot: req.body.sender_type === 'bot',
+		attachments: req.body.attachments,
 	};
 
 	console.log(`[${message.name} (${message.sender_id})]: ${message.text}`);
