@@ -8,13 +8,19 @@ module.exports = {
 	args: true,
 	cooldown: 5,
 	execute(message, args, bot) {
+		console.log(message.attachments);
+
 		if (!message.attachments.length || message.attachments[0].type != 'image') {
+			console.log(!message.attachments.length, ' ', message.attachments[0].type != 'image');
 			bot.sendMessage(`@${message.name} you need to send an image!`);
 			return;
 		}
 
+		console.log(message.attachments[0].url);
+
 		jimp.read(message.attachments[0].url)
 			.then(image => {
+				console.log('editing image');
 				const currentW = image.getWidth();
 				const currentH = image.getHeight();
 
