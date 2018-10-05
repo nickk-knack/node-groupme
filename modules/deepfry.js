@@ -5,7 +5,7 @@ module.exports = {
 	aliases: ['fry', 'df'],
 	description: 'Deep fry an image you send.',
 	usage: '<image>',
-	args: true,
+	args: false,
 	cooldown: 5,
 	execute(message, args, bot) {
 		console.log(message.attachments);
