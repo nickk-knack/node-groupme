@@ -19,8 +19,6 @@ module.exports = {
 
 		jimp.read(message.attachments[0].url)
 			.then(image => {
-				console.log('editing image');
-				console.log('get dimensions');
 				const currentW = image.getWidth();
 				const currentH = image.getHeight();
 
@@ -29,47 +27,45 @@ module.exports = {
 				// 	{ apply: 'red', params: [69] },
 				// 	{ apply: 'saturate', params: [69]}
 				// ]);
-				console.log('posterize');
 				image.posterize(4);
-				console.log('brightness');
 				image.brightness(0.4);
-				console.log('contrast');
 				image.contrast(0.3);
-				console.log('blur');
 				image.blur(2);
-				console.log('resize 1');
 				image.resize(169, 169);
-				console.log('resize 2');
 				image.resize(currentW, currentH);
-				console.log('set jpeg image quality');
 				image.quality(69);
 
 				// write to buffer
 				// const imageBuffer = image.getBuffer(jimp.MIME_JPEG);
+				console.log('Get base 64');
 				const imageb64URI = image.getBase64(jimp.MIME_JPEG);
 				
 				// upload image, send link
+				console.log('set headers');
 				const headers = {
 					'X-Access-Token': bot.access_token,
 					'Content-Type': 'image/jpeg'
 				};
 
+				console.log('set options');
 				const options = {
 					url: 'https://image.groupme.com/pictures',
 					method: 'POST',
 					headers: headers,
 					body: imageb64URI,
 				};
-
-				bot.request(options, (error, response, body) => {
+				
+				console.log('set callback');
+				function callback(error, response, body) {
 					if (!error && response.statusCode == 200) {
 						console.log(body);
 						bot.sendMessage('', body.picture_url);
 					}
-				});
+				}
+
+				console.log('make request');
+				bot.request(options, callback);
 			})
-			.catch(e => {
-				console.error(e);
-			});
+			.catch(e => console.error(e));
 	},
 };
