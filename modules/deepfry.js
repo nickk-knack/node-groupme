@@ -38,7 +38,10 @@ module.exports = {
 				// write to buffer
 				// const imageBuffer = image.getBuffer(jimp.MIME_JPEG);
 				console.log('Get base 64');
-				const imageb64URI = image.getBase64(jimp.MIME_JPEG);
+				let imageb64URI;
+				image.getBase64(jimp.MIME_JPEG, b64string => {
+					imageb64URI = b64string;
+				});
 				
 				// upload image, send link
 				console.log('set headers');
