@@ -7,7 +7,8 @@ const port = process.env.PORT || 3000;
 // Initialize bot
 bot.initialize({
 	bot_id: process.env.BOT_ID,
-	group_id: process.env.GROUP_ID
+	group_id: process.env.GROUP_ID,
+	access_token: process.env.ACCESS_TOKEN,
 });
 
 // Setup express app
