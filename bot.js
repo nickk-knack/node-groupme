@@ -24,9 +24,13 @@ const bot = {
 	api_url: 'https://api.groupme.com/v3/bots/',
 	bot_id: '',
 	group_id: '',
+	access_token: '',
 	commands: commandModules,
-	sendMessage(text) {
-		const data = `${bot.api_url}post?bot_id=${bot.bot_id}&text=${encodeURIComponent(text)}`;
+	sendMessage(text, picture_url = null) {
+		let data = `${bot.api_url}post?bot_id=${bot.bot_id}&text=${encodeURIComponent(text)}`;
+		if (picture_url != null) {
+			data += `&picture_url=${picture_url}`;
+		}
 		bot.request.post(data, (error) => {
 			if (error) {
 				console.error(error);
@@ -151,6 +155,9 @@ exports.initialize = (values) => {
 	if (!values.group_id) {
 		console.error('No group_id provided!');
 		err = true;
+	}
+	if (!values.access_token) {
+		console.log('No access token provided! Image uploading will fail.');
 	}
 	if (err) return;
 
