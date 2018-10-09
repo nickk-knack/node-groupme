@@ -20,6 +20,8 @@ module.exports = {
 			result = images[randIndex].url;
 
 			bot.sendMessage(result);
+		}).catch(e => {
+			console.error(e);
 		});
 	},
 };
