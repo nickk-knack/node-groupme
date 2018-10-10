@@ -22,11 +22,19 @@ module.exports = {
 			search.gifs()
 				.then(gifs => {
 					bot.sendMessage(gifs[Math.floor(Math.random() * gifs.length)].url);
+				})
+				.catch(error => {
+					console.error(error);
+					bot.sendMessage(`Could not find any gifs for ${query}`);
 				});
 		} else if (contentType == 'vid') {
 			search.videos()
 				.then(vids => {
 					bot.sendMessage(vids[Math.floor(Math.random() * vids.length)].url);
+				})
+				.catch(error => {
+					console.error(error);
+					bot.sendMessage(`Could not find any vids for ${query}`);
 				});
 		}
 	}
