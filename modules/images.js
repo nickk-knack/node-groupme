@@ -22,7 +22,11 @@ module.exports = {
 			bot.sendMessage(result);
 		}).catch(e => {
 			console.error(e);
-			bot.sendMessage('oopsie woopsie, something is fucksie wucksies!! uwu');
+			if (e.statusCode == 403) {
+				bot.sendMessage('I literally can\'t search anymore');
+			} else {
+				bot.sendMessage('oopsie woopsie, something is fucksie wucksies!! uwu');
+			}
 		});
 	},
 };
