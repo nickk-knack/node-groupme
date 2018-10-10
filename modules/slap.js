@@ -36,6 +36,6 @@ module.exports = {
 		const user = args.join(' ');
 		let item = items[Math.floor(Math.random() * items.length)];
 
-		bot.sendMessage(`*slaps ${user} with ${item}!*`);
+		bot.sendMessage(`*slaps ${user} with ${item}*`);
 	},
 };
