@@ -22,6 +22,7 @@ module.exports = {
 			bot.sendMessage(result);
 		}).catch(e => {
 			console.error(e);
+			bot.sendMessage('oopsie woopsie, something is fucksie wucksies!! uwu');
 		});
 	},
 };
