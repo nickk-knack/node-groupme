@@ -10,6 +10,10 @@ const quotes = [
 	'Give me lamp, brother.',
 	'STARE. STARE AT THIS.',
 	'I want to inject something useful into you.',
+	'That\'s what that air does.',
+	'I like this 7.',
+	'Let\'s assume you can transform yourself.',
+	'Fleshlight.',
 ];
 
 module.exports = {
