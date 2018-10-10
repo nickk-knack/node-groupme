@@ -27,7 +27,7 @@ module.exports = {
 				bot.sendMessage(result);
 			})
 			.catch(e => {
-				bot.sendMessage('oopsie woopse, someone made a fuckie wuckie!! uwu');
+				bot.sendMessage('oopsie woopsie, someone made a fuckie wuckie!! uwu');
 				console.log(e);
 			});
 	},
