@@ -66,7 +66,7 @@ exports.onPost = (req, res) => {
 			bot.sendMessage('ok now THIS is epic');
 		}
 
-		const assTokens = message.text.toLowerCase().match(/(\w*\s)ass(\s\w*)/g);
+		const assTokens = message.text.toLowerCase().match(/(\w*[\s-])ass(\s\w*)/g);
 		
 		if (assTokens) {
 			const fixedAss = assTokens[0].match(/ass(\s\w*)/g)[0].replace(/\s/, '-');
@@ -74,14 +74,21 @@ exports.onPost = (req, res) => {
 		}
 
 		const rand = Math.floor(Math.random() * 1000) + 1;
-		if (message.sender_id == 32344351 && rand > 990) {
-			bot.sendMessage('fuck off, andrew');
-		} else if (message.sender_id == 23245751 && rand > 990) {
-			bot.sendMessage('nick is a bitch');
-		} else if (message.sender_id == 37488539 && rand > 990) {
-			bot.sendMessage('go photoshop a bigger dick on yourself, jake');
-		} else if (message.sender_id == 38353365 && rand > 990) {
-			bot.sendMessage('max, shouldn\'t you be on call? lil ho');
+		if (rand > 990) {
+			switch (message.sender_id) {
+			case 32344351:
+				bot.sendMessage('fuck off, andrew');
+				break;
+			case 23245751:
+				bot.sendMessage('nick is a bitch');
+				break;
+			case 37488539:
+				bot.sendMessage('go photoshop a bigger dick on yourself, jake');
+				break;
+			case 38353365:
+				bot.sendMessage('max, shouldn\'t you be on call? lil ho');
+				break;
+			}
 		}
 		res.end();
 		return;
