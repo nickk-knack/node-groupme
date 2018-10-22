@@ -70,7 +70,7 @@ exports.onPost = (req, res) => {
 		console.log(assTokens);
 		
 		if (assTokens) {
-			const fixedAss = assTokens[0].match(/ass(\s\w*)/g).replace(/\s/, '-');
+			const fixedAss = assTokens[0].match(/ass(\s\w*)/g)[0].replace(/\s/, '-');
 			console.log(fixedAss);
 			bot.sendMessage(fixedAss);
 		}
