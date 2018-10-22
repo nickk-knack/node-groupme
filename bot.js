@@ -66,6 +66,13 @@ exports.onPost = (req, res) => {
 			bot.sendMessage('ok now THIS is epic');
 		}
 
+		const assTokens = message.text.toLowerCase().match(/(\w*\s)ass(\s\w*)/g);
+		
+		if (assTokens) {
+			const fixedAss = assTokens[0].match(/ass(\s\w*)/g).replace(/\s/, '-');
+			bot.sendMessage(fixedAss);
+		}
+
 		const rand = Math.floor(Math.random() * 1000) + 1;
 		if (message.sender_id == 32344351 && rand > 990) {
 			bot.sendMessage('fuck off, andrew');
