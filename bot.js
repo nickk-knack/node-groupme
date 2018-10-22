@@ -67,11 +67,9 @@ exports.onPost = (req, res) => {
 		}
 
 		const assTokens = message.text.toLowerCase().match(/(\w*\s)ass(\s\w*)/g);
-		console.log(assTokens);
 		
 		if (assTokens) {
 			const fixedAss = assTokens[0].match(/ass(\s\w*)/g)[0].replace(/\s/, '-');
-			console.log(fixedAss);
 			bot.sendMessage(fixedAss);
 		}
 
