@@ -1,17 +1,16 @@
 const responses = [
-	'ur welcome',
-	'you\'re welcome',
-	'ur welc',
-	'no prob',
-	'sure thing',
-	'uh huh',
+	'thank',
+	':)',
+	'yuh',
+	'thanks, yo',
+	'thanks',
+	'aww, thanks',
 	'yeet',
 ];
 
 module.exports = {
-	name: 'thank',
-	aliases: ['thanks'],
-	description: 'Thank the bot.',
+	name: 'good',
+	description: 'Tell the bot that he\'s a good boy.',
 	args: false,
 	cooldown: 1,
 	execute(message, args, bot) {
