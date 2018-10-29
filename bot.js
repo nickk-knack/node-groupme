@@ -22,6 +22,10 @@ const secretMessages = {
 		'max, shouldn\'t you be on call? lil ho',
 		'max, you MUST contact me',
 	],
+	29852683: [
+		'matt, what\'s the derivative of e^x? bitch',
+		'matt is the dumb one in the group',
+	],
 };
 
 // Add a find function to the Map object (because it doesn't exist in vanilla JS for some reason)
