@@ -5,6 +5,25 @@ const commandModules = new Map();
 const commandFiles = fs.readdirSync('./modules');
 const cooldowns = new Map();
 
+const secretMessages = {
+	32344351: [
+		'fuck off, andrew',
+		'are you done puking yet, andrew?',
+	],
+	23245751: [
+		'nick is a bitch',
+		'god nick sucks',
+	],
+	37488539: [
+		'go photoshop a bigger dick on yourself, jake',
+		'.bad jake',
+	],
+	38353365: [
+		'max, shouldn\'t you be on call? lil ho',
+		'max, you MUST contact me',
+	],
+};
+
 // Add a find function to the Map object (because it doesn't exist in vanilla JS for some reason)
 Map.prototype.find = function (func) {
 	if (typeof func === 'function') {
@@ -74,21 +93,9 @@ exports.onPost = (req, res) => {
 		}
 
 		const rand = Math.floor(Math.random() * 1000) + 1;
-		if (rand > 990) {
-			switch (message.sender_id) {
-			case 32344351:
-				bot.sendMessage('fuck off, andrew');
-				break;
-			case 23245751:
-				bot.sendMessage('nick is a bitch');
-				break;
-			case 37488539:
-				bot.sendMessage('go photoshop a bigger dick on yourself, jake');
-				break;
-			case 38353365:
-				bot.sendMessage('max, shouldn\'t you be on call? lil ho');
-				break;
-			}
+		if (rand > 10) { // 990
+			const smLength = secretMessages[message.sender_id].length;
+			bot.sendMessage(secretMessages[message.sender_id][Math.floor(Math.random() * smLength)]);
 		}
 		res.end();
 		return;
