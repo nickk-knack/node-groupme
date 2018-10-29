@@ -93,7 +93,7 @@ exports.onPost = (req, res) => {
 		}
 
 		const rand = Math.floor(Math.random() * 1000) + 1;
-		if (rand > 10) { // 990
+		if (rand > 990) {
 			const smLength = secretMessages[message.sender_id].length;
 			bot.sendMessage(secretMessages[message.sender_id][Math.floor(Math.random() * smLength)]);
 		}
