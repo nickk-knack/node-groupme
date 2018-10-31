@@ -29,6 +29,7 @@
     "jimp": "^0.5.3",
     "pornsearch": "^2.4.2",
     "request": "^2.88.0",
-    "snekfetch": "^4.0.4"
+    "snekfetch": "^4.0.4",
+    "youtube-search": "^1.1.3"
   }
 }
