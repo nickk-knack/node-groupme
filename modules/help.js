@@ -33,7 +33,7 @@ module.exports = {
 			}
 
 			if (command.aliases) {
-				msg += `Aliases: ${command.aliases.join(', ')}\n`;
+				msg += `Aliases: [${command.aliases.join(', ')}]\n`;
 			}
 
 			if (command.usage) {
