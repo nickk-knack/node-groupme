@@ -26,7 +26,7 @@ module.exports = {
 			}
 			
 			const command = bot.commands.get(args[0]);
-			let msg = `${command.name}:\n`;
+			let msg = `${command.name}:\n\n`;
 
 			if (command.description) {
 				msg += `${command.description}\n`;
