@@ -27,8 +27,8 @@ module.exports = {
 			}
 
 			const toFromLang = res.lang.split('-');
-			const toLang = toFromLang[0];
-			const fromLang = toFromLang[1];
+			const toLang = toFromLang[1];
+			const fromLang = toFromLang[0];
 			
 			bot.sendMessage(`Translation from ${fromLang} to ${toLang}: ${res.text}`);
 		});
