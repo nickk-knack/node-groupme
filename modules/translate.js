@@ -14,7 +14,7 @@ module.exports = {
 		const text = args.slice(1, args.length).join(' ');
 		if (!langs.includes(lang)) {
 			if (lang == 'rand') {
-				lang = langs[Math.floor(Math.random(langs.length))];
+				lang = langs[Math.floor(Math.random() * langs.length)];
 			} else {
 				return bot.sendMessage('Invalid language!');
 			}
