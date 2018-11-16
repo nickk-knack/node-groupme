@@ -25,10 +25,12 @@ module.exports = {
 				console.error(err);
 				bot.sendMessage('Shit is fucked up, cunt.');
 			}
-			
-			//bot.sendMessage(`Translation from ${res} to ${lang}: ${res.text}`);
-			console.log('Yandex response: ', res);
 
+			const toFromLang = res.lang.split('-');
+			const toLang = toFromLang[0];
+			const fromLang = toFromLang[1];
+			
+			bot.sendMessage(`Translation from ${fromLang} to ${toLang}: ${res.text}`);
 		});
 	},
 };
