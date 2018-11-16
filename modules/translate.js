@@ -96,8 +96,6 @@ const langs = {
 	zh: 'Chinese'
 };
 
-exports.langs = langs;
-
 module.exports = {
 	name: 'translate',
 	aliases: ['t'],
