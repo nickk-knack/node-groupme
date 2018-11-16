@@ -96,11 +96,14 @@ const langs = {
 	zh: 'Chinese'
 };
 
+exports.langs = langs;
+
 module.exports = {
 	name: 'translate',
 	aliases: ['t'],
 	description: `Translate your dumb text into any other language. Use 'rand' for a random language or one of the supported languages.
-Supported languages: [${Object.keys(langs).join(', ')}]`,
+Supported languages: [${Object.keys(langs).join(', ')}]
+Use "${process.env.PREFIX}translate <lang>" to see what language a language code refers to.`,
 	usage: '<to language> <text>',
 	args: true,
 	cooldown: 3,
@@ -113,6 +116,10 @@ Supported languages: [${Object.keys(langs).join(', ')}]`,
 			} else {
 				return bot.sendMessage('Invalid language!');
 			}
+		}
+
+		if (!text) {
+			return bot.sendMessage(`${lang}: ${langs[lang]}`);
 		}
 
 		translate.translate(text, { to: lang }, (err, res) => {
