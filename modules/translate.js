@@ -1,6 +1,6 @@
-const translate = require('google-translate-api');
+const translate = require('yandex-translate')(process.env.YANDEX_TRANSLATE_API_KEY);
 
-const langs = ['en', 'bg', 'ru', 'nl', 'fr', 'ga', 'it', 'ja', 'ko', 'la', 'no', 'es', 'sv', 'el', 'de', 'cy', 'zh-CN', 'zh-TW', 'ar', 'af'];
+const langs = ['en', 'bg', 'ru', 'nl', 'fr', 'ga', 'it', 'ja', 'ko', 'la', 'no', 'es', 'vi', 'sv', 'el', 'de', 'cy', 'zh', 'ar', 'af', 'he'];
 
 module.exports = {
 	name: 'translate',
@@ -10,7 +10,7 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
-		let lang = args[0];
+		let lang = args[0].toLowerCase();
 		const text = args.slice(1, args.length).join(' ');
 		if (!langs.includes(lang)) {
 			if (lang == 'rand') {
@@ -20,11 +20,15 @@ module.exports = {
 			}
 		}
 
-		translate(text, { to: lang }).then(res => {
-			bot.sendMessage(`Translation from ${res.from.language.iso} to ${lang}: ${res.text}`);
-		}).catch(err => {
-			bot.sendMessage('Shit is fucked up, cunt');
-			console.error(err);
+		translate.translate(text, { to: lang }, (err, res) => {
+			if (err || res.code != 200) {
+				console.error(err);
+				bot.sendMessage('Shit is fucked up, cunt.');
+			}
+			
+			//bot.sendMessage(`Translation from ${res} to ${lang}: ${res.text}`);
+			console.log('Yandex response: ', res);
+
 		});
 	},
 };
