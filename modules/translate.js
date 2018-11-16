@@ -100,7 +100,7 @@ module.exports = {
 	name: 'translate',
 	aliases: ['t'],
 	description: `Translate your dumb text into any other language. Use 'rand' for a random language or one of the supported languages.
-	Supported languages: [${langs.join(', ')}]`,
+	Supported languages: [${Object.keys(langs).join(', ')}]`,
 	usage: '<to language> <text>',
 	args: true,
 	cooldown: 3,
