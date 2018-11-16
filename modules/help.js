@@ -19,8 +19,7 @@ module.exports = {
 		const { commands } = bot;
 		if (!args.length) {
 			bot.sendMessage(`Commands: ${commands.map(cmd => cmd.name).join(', ')}\n You can send ${prefix}help [command name] for info on a specific command.`);
-		} 
-		else {
+		} else {
 			if (!bot.commands.has(args[0])) {
 				return bot.sendMessage(`@${message.name} "${args[0]}" is not a valid command!`);
 			}
