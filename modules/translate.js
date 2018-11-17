@@ -110,7 +110,7 @@ Use "${process.env.PREFIX}translate <lang>" to see what language a language code
 		const text = args.slice(1, args.length).join(' ');
 		if (!langs[lang]) {
 			if (lang == 'rand') {
-				lang = langs[Math.floor(Math.random() * Object.keys(langs).length)];
+				lang = Object.keys(langs)[Math.floor(Math.random() * Object.keys(langs).length)];
 			} else {
 				return bot.sendMessage('Invalid language!');
 			}
