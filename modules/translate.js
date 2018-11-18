@@ -99,7 +99,7 @@ const langs = {
 module.exports = {
 	name: 'translate',
 	aliases: ['t'],
-	description: `Translate your dumb text into any other language. Use 'rand' for a random language or one of the supported languages.
+	description: `Translate your dumb text into any other language. Use 'rand' for a random language, any number for multiple random translations, or one of the supported languages.
 Supported languages: [${Object.keys(langs).join(', ')}]
 Use "${process.env.PREFIX}translate <lang>" to see what language a language code refers to.`,
 	usage: '<to language> <text>',
@@ -111,6 +111,10 @@ Use "${process.env.PREFIX}translate <lang>" to see what language a language code
 		if (!langs[lang]) {
 			if (lang == 'rand') {
 				lang = Object.keys(langs)[Math.floor(Math.random() * Object.keys(langs).length)];
+			} else if (lang.match(/^[0-9]+/g)) {
+				const match = lang.match(/^[0-9]+/g);
+				const num = parseInt(match[0]);
+				return multipleTranslations(num, text, bot);
 			} else {
 				return bot.sendMessage('Invalid language!');
 			}
@@ -133,4 +137,64 @@ Use "${process.env.PREFIX}translate <lang>" to see what language a language code
 			bot.sendMessage(`Translation from ${fromLang} to ${toLang}: ${res.text}`);
 		});
 	},
+};
+
+const multipleTranslations = (num = 5, text, bot) => {
+	let startLang;
+	
+	promiseGetLang(text).then(lang => {
+		startLang = lang;
+	});
+
+	let newText = text;
+	const langsPassed = [];
+
+	for (let i = 0; i < num; i++) {
+		let cont = false;
+		let lang = Object.keys(langs)[Math.floor(Math.random() * Object.keys(langs).length)];
+
+		promiseTranslate(newText, lang, langsPassed).then(() => {
+			cont = true;
+		}).catch(err => {
+			bot.sendMessage(err);
+		});
+
+		while (!cont);
+	}
+
+	promiseTranslate(newText, startLang, langsPassed).then(() => {
+		const translatedText = newText;
+		bot.sendMessage(`Translation from ${startLang} through ${langsPassed.join(', ')} back to ${startLang}: ${translatedText}`);
+	});
+};
+
+const promiseGetLang = (text) => {
+	return new Promise((resolve, reject) => {
+		translate.detect(text, { hint: 'en' }, (err, res) => {
+			if (err || res.code != 200) {
+				console.error(err);
+				reject('Shit is fucked up, cunt');
+			}
+
+			resolve(res.lang);
+		});
+	});
+};
+
+const promiseTranslate = (newText, lang, langsPassed) => {
+	return new Promise((resolve, reject) => {
+		translate.translate(newText, { to: lang }, (err, res) => {
+			if (err || res.code != 200) {
+				console.error(err);
+				reject('Shit is fucked up, cunt.');
+			}
+
+			const toFromLang = res.lang.split('-');
+			const toLang = langs[toFromLang[1]];
+			langsPassed.push(toLang);
+
+			newText = res.text;
+			resolve();
+		});
+	});
 };
