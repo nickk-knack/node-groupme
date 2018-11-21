@@ -12,13 +12,13 @@ const hashString = (string) => {
 	return hash + 2147483647;
 };
 
-const normalizeHash = (val) => (val  / 4294967294);
+const normalizeHash = (val) => (val / 4294967294);
 
 module.exports = {
 	name: 'gaydar',
 	aliases: ['gay'],
-	description: 'Enable the bot\'s gaydar to check and see if someone is gay.',
-	usage: '<person\'s name>',
+	description: 'Enable the bot\'s gaydar to check and see if something is gay.',
+	usage: '<noun>',
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
