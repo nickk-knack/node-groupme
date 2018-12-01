@@ -21,10 +21,19 @@ const secretMessages = {
 	38353365: [
 		'max, shouldn\'t you be on call? lil ho',
 		'max, you MUST contact me',
+		'want a sprite cranberry?',
 	],
 	29852683: [
 		'matt, what\'s the derivative of e^x? bitch',
 		'matt is the dumb one in the group',
+	],
+	8477170: [
+		'tik tok',
+		'chris big gay',
+	],
+	32364424: [
+		'carly is high right now',
+		'carly bigger gay',
 	],
 };
 
