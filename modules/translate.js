@@ -102,7 +102,7 @@ module.exports = {
 	description: `Translate your dumb text into any other language. Use 'rand' for a random language or one of the supported languages.
 Supported languages: [${Object.keys(langs).join(', ')}]
 Use "${process.env.PREFIX}translate <lang>" to see what language a language code refers to.`,
-	usage: '<to language> <text>',
+	usage: '<language code> [text]',
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
