@@ -7,8 +7,7 @@ module.exports = {
 	execute(message, args, bot) {
 		const b = '🅱️';
 		const bMessage = args.join(' ');
-		const regexs = [/b/g, /b|p/g];
-		const regex = regexs[Math.floor(Math.random() * regexs.length)];
+		const regex = /b/g;
 
 		bMessage.replace(regex, b);
 
