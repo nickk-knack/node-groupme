@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'b',
-	aliases: [],
+	aliases: ['🅱️'],
 	description: '🅱️🅱️🅱️ 🅱️🅱️ 🅱️🅱️🅱️🅱️🅱️ 🅱️🅱️🅱️ 🅱️🅱️🅱️🅱️🅱️🅱️🅱️ 🅱️🅱️🅱️🅱️.',
 	args: true,
 	cooldown: 3,
