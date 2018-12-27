@@ -1,3 +1,15 @@
+const responses = [
+	':(',
+	'oof',
+	'ok :(',
+	'aww :(',
+	':c',
+	'wow',
+	'why? :(',
+	'ok :c',
+	'mega oof',
+];
+
 module.exports = {
 	name: 'bad',
 	aliases: ['fuckoff'],
@@ -5,6 +17,6 @@ module.exports = {
 	args: false,
 	cooldown: 1,
 	execute(message, args, bot) {
-		bot.sendMessage(':(');
+		bot.sendMessage(responses[Math.floor(Math.random() * responses.length)]);
 	},
 };
