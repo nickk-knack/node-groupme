@@ -14,7 +14,7 @@ module.exports = {
 	description: 'List all commands/info about specific commands.',
 	usage: '[command name]',
 	args: false,
-	cooldown: 10,
+	cooldown: 7,
 	execute(message, args, bot) {
 		const { commands } = bot;
 		if (!args.length) {
