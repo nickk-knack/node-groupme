@@ -24,6 +24,10 @@ module.exports = {
 	execute(message, args, bot) {
 		const name = args.join(' ').trim();
 
+		if (name.toLowerCase() == 'nick chiconas') {
+			return bot.sendMessage(`${name} is not gay.`);
+		}
+
 		const nameHash = hashString(name);
 		const normalizedVal = normalizeHash(nameHash);
 		const gay = (normalizedVal >= 0.85);
