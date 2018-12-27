@@ -22,7 +22,7 @@ module.exports = {
 			}
 
 			console.log(res);
-			bot.sendMessage(res[Math.floor(Math.random() * res.length)].link);
+			bot.sendMessage(res[0].link);
 		});
 	},
 };
