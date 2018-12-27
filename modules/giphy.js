@@ -8,7 +8,7 @@ module.exports = {
 	args: false,
 	cooldown: 10,
 	execute(message, args, bot) {
-		const query = args.join(' ');
+		const query = args.join(' ').trim();
 		const url = `http://api.giphy.com/v1/gifs/search?limit=${limit}&q=${encodeURIComponent(query)}&api_key=dc6zaTOxFJmzC`;
 
 		bot.request.get(url, (err, resp, body) => {
