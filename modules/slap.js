@@ -33,7 +33,7 @@ module.exports = {
 			return;
 		}
 
-		const user = args.join(' ');
+		const user = args.join(' ').trim();
 		let item = items[Math.floor(Math.random() * items.length)];
 
 		bot.sendMessage(`*slaps ${user} with ${item}*`);
