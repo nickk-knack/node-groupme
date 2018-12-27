@@ -9,10 +9,10 @@ const hashString = (string) => {
 		hash |= 0;
 	}
 
-	return hash + 2147483647;
+	return hash + 0x7fffffff;
 };
 
-const normalizeHash = (val) => (val / 4294967294);
+const normalizeHash = (val) => (val / 0xfffffffe);
 
 module.exports = {
 	name: 'gaydar',
@@ -22,7 +22,7 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
-		const name = args.join(' ');
+		const name = args.join(' ').trim();
 
 		const nameHash = hashString(name);
 		const normalizedVal = normalizeHash(nameHash);
