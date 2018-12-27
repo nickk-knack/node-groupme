@@ -13,7 +13,7 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
-		const query = args.join(' ');
+		const query = args.join(' ').trim();
 
 		search(query, opts, (err, res) => {
 			if (err) {
