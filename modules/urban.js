@@ -9,7 +9,7 @@ module.exports = {
 	args: true,
 	cooldown: 5,
 	execute(message, args, bot) {
-		snekfetch.get('https://api.urbandictionary.com/v0/define').query({ term: args.join(' ') })
+		snekfetch.get('https://api.urbandictionary.com/v0/define').query({ term: args.join(' ').trim() })
 			.then(data => data.body)
 			.then (body => {
 				if (body.result_type === 'no_results') {
