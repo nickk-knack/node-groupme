@@ -7,10 +7,8 @@ module.exports = {
 	execute(message, args, bot) {
 		const b = '🅱️';
 		const bMessage = args.join(' ');
-		const regex = /b/g;
+		const regex = /[Bb]+/g;
 
-		bMessage.replace(regex, b);
-
-		bot.sendMessage(bMessage);
+		bot.sendMessage(bMessage.replace(regex, b));
 	},
 };
