@@ -2,6 +2,7 @@ const snekfetch = require('snekfetch');
 
 module.exports = {
 	name: 'e621',
+	aliases: ['e6'],
 	description: 'Search e621 for whatever tags you request.',
 	args: true,
 	usage: '<search tags>',
