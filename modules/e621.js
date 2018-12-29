@@ -7,7 +7,7 @@ module.exports = {
 	usage: '<tags>',
 	cooldown: 5,
 	execute(message, args, bot) {
-		const query = args.join('+').trim();
+		const query = args.trim().join('+');
 		if (query == '') {
 			bot.sendMessage('UwU');
 			return;
