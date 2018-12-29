@@ -3,7 +3,7 @@ const snekfetch = require('snekfetch');
 module.exports = {
 	name: 'uwu',
 	aliases: ['e926'],
-	description: 'Searches e926.',
+	description: 'Searches e926 for whatever tags you request.',
 	usage: '<search tags>',
 	args: true,
 	cooldown: 3,
