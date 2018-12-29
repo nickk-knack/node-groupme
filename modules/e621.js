@@ -4,7 +4,7 @@ module.exports = {
 	name: 'e621',
 	description: 'Search e621 for whatever tags you request.',
 	args: true,
-	usage: '<tags>',
+	usage: '<search tags>',
 	cooldown: 5,
 	execute(message, args, bot) {
 		const query = args.trim().join('+');
