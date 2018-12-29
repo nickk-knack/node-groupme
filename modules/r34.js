@@ -8,7 +8,7 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
-		const query = args.trim().join('+');
+		const query = args.join('+').trim();
 
 		snekfetch.get('https://r34-json-api.herokuapp.com/posts').query({ tags: query, limit: 20 })
 			.then(data => data.body)
@@ -21,7 +21,8 @@ module.exports = {
 				const randIndex = Math.floor(Math.random() * body.length);
 				const result = body[randIndex].file_url;
 
-				bot.sendMessage(result);
+				// substring 46 because the url returned from the api has extra shit at the front that is a constant length
+				bot.sendMessage(result.substring(46));
 			})
 			.catch(e => {
 				bot.sendMessage('oopsie woopse, someone made a fuckie wuckie!! uwu');

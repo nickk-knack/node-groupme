@@ -8,7 +8,7 @@ module.exports = {
 	usage: '<search tags>',
 	cooldown: 5,
 	execute(message, args, bot) {
-		const query = args.trim().join('+');
+		const query = args.join('+').trim();
 		if (query == '') {
 			bot.sendMessage('UwU');
 			return;
