@@ -30,6 +30,7 @@
     "pornsearch": "^2.4.2",
     "request": "^2.88.0",
     "snekfetch": "^4.0.4",
+    "xml2js": "^0.4.19",
     "yandex-translate": "^2.1.2",
     "youtube-search": "^1.1.3"
   }
