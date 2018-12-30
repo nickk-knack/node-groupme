@@ -1,4 +1,5 @@
 const snekfetch = require('snekfetch');
+const parser = require('xml2js').parseString;
 
 module.exports = {
 	name: 'rule34',
@@ -10,7 +11,7 @@ module.exports = {
 	execute(message, args, bot) {
 		const query = args.join('+').trim();
 
-		snekfetch.get('https://r34-json-api.herokuapp.com/posts').query({ tags: query, limit: 20 })
+		snekfetch.get('https://rule34.xxx/index.php?page=dapi&s=post&q=index').query({ tags: query, limit: 20 })
 			.then(data => data.body)
 			.then(body => {
 				if (!body.length || body.success == false) {
@@ -18,15 +19,24 @@ module.exports = {
 					return;
 				}
 
-				const randIndex = Math.floor(Math.random() * body.length);
-				const result = body[randIndex].file_url;
+				parser(body.toString('utf8'), (err, result) => {
+					if (err) {
+						console.error(err);
+						bot.sendMessage('UwU sowwy something went wong... (XML parsing failed)');
+					}
 
-				// substring 46 because the url returned from the api has extra shit at the front that is a constant length
-				bot.sendMessage(result.substring(46));
+					const json = JSON.parse(JSON.stringify(result));
+					const posts = json.posts.post;
+
+					const randIndex = Math.floor(Math.random() * posts.length);
+					const fileUrl = posts[randIndex].$.file_url;
+
+					bot.sendMessage(fileUrl);
+				});
 			})
 			.catch(e => {
+				console.error(e);
 				bot.sendMessage('oopsie woopse, someone made a fuckie wuckie!! uwu');
-				console.log(e);
 			});
 	},
 };
