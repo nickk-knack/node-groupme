@@ -29,7 +29,7 @@ module.exports = {
 			})
 			.catch(e => {
 				bot.sendMessage('oopsie woopsie, someone made a fuckie wuckie!! uwu');
-				console.log(e);
+				console.error(e);
 			});
 	},
 };
