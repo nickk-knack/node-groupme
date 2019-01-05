@@ -2,9 +2,10 @@ const snekfetch = require('snekfetch');
 
 module.exports = {
 	name: 'e621',
-	description: 'Search e621',
+	aliases: ['e6'],
+	description: 'Search e621 for whatever tags you request.',
 	args: true,
-	usage: '<tags>',
+	usage: '<search tags>',
 	cooldown: 5,
 	execute(message, args, bot) {
 		const query = args.join('+').trim();
@@ -28,7 +29,7 @@ module.exports = {
 			})
 			.catch(e => {
 				bot.sendMessage('oopsie woopsie, someone made a fuckie wuckie!! uwu');
-				console.log(e);
+				console.error(e);
 			});
 	},
 };
