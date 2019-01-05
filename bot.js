@@ -98,26 +98,22 @@ exports.onPost = (req, res) => {
 
 		if (message.text.toLowerCase().includes('epic')) {
 			messagesToSend.push('ok now THIS is epic');
-			//bot.sendMessage('ok now THIS is epic');
 		}
 
 		if (message.text.toLowerCase().startsWith('never have i ever')) {
 			messagesToSend.push('*puts finger down*');
-			//bot.sendMessage('*puts finger down*');
 		}
 
 		const assTokens = message.text.toLowerCase().match(/(\w*[\s-])ass(\s\w*)/g);
 		
 		if (assTokens) {
 			const fixedAss = assTokens[0].match(/ass(\s\w*)/g)[0].replace(/\s/, '-');
-			//bot.sendMessage(fixedAss);
 			messagesToSend.push(fixedAss);
 		}
 
 		const rand = Math.floor(Math.random() * 1000) + 1;
 		if (rand > 990) {
 			const smLength = secretMessages[message.sender_id].length;
-			//bot.sendMessage(secretMessages[message.sender_id][Math.floor(Math.random() * smLength)]);
 			messagesToSend.push(secretMessages[message.sender_id][Math.floor(Math.random() * smLength)]);
 		}
 
