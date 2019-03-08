@@ -6,7 +6,7 @@ module.exports = {
 	description: 'Search Giphy for a gif.',
 	usage: '<search terms>',
 	args: false,
-	cooldown: 10,
+	cooldown: 3,
 	execute(message, args, bot) {
 		const query = args.join(' ').trim();
 		const url = `http://api.giphy.com/v1/gifs/search?limit=${limit}&q=${encodeURIComponent(query)}&api_key=dc6zaTOxFJmzC`;
