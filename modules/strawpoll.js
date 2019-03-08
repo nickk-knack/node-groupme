@@ -1,5 +1,5 @@
 const strawpoll = require('strawpolljs');
-const _ = require('lodash/array');
+// const _ = require('lodash/array');
 
 module.exports = {
 	name: 'strawpoll',
@@ -25,10 +25,8 @@ module.exports = {
 			let pollNum;
 			
 			if (isURL) {
-				console.log('URL was provided'); // testing
 				pollNum = args.shift().split('/').pop();
 			} else if (isID) {
-				console.log('ID was provided'); // testing
 				pollNum = args.shift();
 			} else {
 				console.error('wtf? this shouldn\'t happen');
@@ -36,16 +34,26 @@ module.exports = {
 				return;
 			}
 
-			console.log(pollNum); // testing
-
 			strawpoll.readPoll(pollNum).then(res => {
-				console.log(res);
-				const results = _.zip(res.options, res.votes);
-				console.log('results:', results); // testing
-				results.sort((a, b) => a[1] < b[1]);
-				console.log('sorted results:', results); // testing
+				console.log(res, res.options, res.votes);
+				// const results = _.zip(res.options, res.votes);
+				// console.log('results:', results); // testing
+				// results.sort((a, b) => a[1] < b[1]);
+				// console.log('sorted results:', results); // testing
 
-				bot.sendMessage(`Winning result for ${res.title}: ${results[0][0]} with ${results[0][1]} votes.`);
+				const topRes = {
+					result: '',
+					votes: 0,
+				};
+
+				for (let i = 0; i < res.votes.length; i++) {
+					if (res.votes[i] > topRes.votes) {
+						topRes.votes = res.votes[i];
+						topRes.result = res.options[i];
+					}
+				}
+
+				bot.sendMessage(`Winning result for ${res.title}: ${topRes.result} with ${topRes.votes} votes.`);
 			}).catch(err => {
 				console.error(err);
 				bot.sendMessage('An error occurred while processing the read request!');
