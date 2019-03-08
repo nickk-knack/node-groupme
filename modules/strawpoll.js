@@ -1,4 +1,5 @@
 const strawpoll = require('strawpolljs');
+const _ = require('lodash/array');
 
 module.exports = {
 	name: 'strawpoll',
@@ -20,9 +21,15 @@ module.exports = {
 
 			const pollNum = args.shift().split(/\//g).pop();
 
-			strawpoll.readPoll(pollNum).then(res => console.log(res));
+			strawpoll.readPoll(pollNum).then(res => {
+				const results = _.zip(res.options, res.votes);
+				results.sort((a, b) => a[1] < b[1]);
 
-			bot.sendMessage('It worked, but I don\'t have any output for you.');
+				bot.sendMessage(`Winning result for ${res.title}: ${results[0][0]} with ${results[0][1]} votes.`);
+			}).catch(err => {
+				console.error(err);
+				bot.sendMessage('An error occurred while processing the read request!');
+			});
 
 			return;
 		}
@@ -65,20 +72,22 @@ module.exports = {
 
 		const multi = args.includes('-m');
 		args = args.filter(item => item != '-m');
-		const items = args.join(' ').split(/\s\|\s/g);
+		const options = args.join(' ').split(/\s\|\s/g);
 
-		console.log(title, multi, items);
+		console.log(title, multi, options);
 
 		// Create poll
 
 		strawpoll.createPoll({
 			title: title,
-			options: items,
+			options: options,
 			multi: multi,
-			dupcheck: 'normal',
-			captcha: false,
-		}).then(res => console.log(res));
-
-		bot.sendMessage('It worked, but I don\'t have any output for you.');
+		}).then(res => {
+			console.log(res);
+			bot.sendMessage('It worked, but I don\'t have any output for you.');
+		}).catch(err => {
+			console.error(err);
+			bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
+		});
 	},
 };
