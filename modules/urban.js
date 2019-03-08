@@ -11,7 +11,7 @@ module.exports = {
 	execute(message, args, bot) {
 		snekfetch.get('https://api.urbandictionary.com/v0/define').query({ term: args.join(' ').trim() })
 			.then(data => data.body)
-			.then (body => {
+			.then(body => {
 				if (body.result_type === 'no_results') {
 					bot.sendMessage(`No results found for **${args.join(' ')}**`);
 					return;
@@ -23,6 +23,10 @@ module.exports = {
 				msg += `Definition: ${trim(answer.definition, 512)}\n`;
 				msg += `Example: ${trim(answer.example, 256)}\n`;
 				bot.sendMessage(msg);
-			});		
+			})
+			.catch(err => {
+				console.error(err);
+				bot.sendMessage('That word could not be found!');
+			});
 	},
 };
