@@ -1,4 +1,5 @@
 const strawpoll = require('strawpolljs');
+const req = require('request');
 
 module.exports = {
 	name: 'strawpoll',
@@ -107,9 +108,9 @@ function create(args, bot) {
 
 	// Create poll
 
-	bot.request({
+	req({
 		method: 'POST',
-		uri: 'http://www.strawpoll.me/api/v2/polls',
+		uri: 'https://strawpoll.me/api/v2/polls',
 		followAllRedirects: true,
 		json: true,
 		body: {
