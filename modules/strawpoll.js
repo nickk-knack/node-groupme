@@ -5,7 +5,7 @@ module.exports = {
 	name: 'strawpoll',
 	aliases: ['sp'],
 	description: 'Create a new strawpoll, or get the results of a strawpoll from a link.\n Surround the title with quotation marks. Options are seperated with a pipe ("|") character. Use the "-m" flag for allowing multiple answers.',
-	usage: '<"title"> <options> [-m] | <-r> <link>',
+	usage: '<"title"> <options> [-m] | <-r> <link | poll number>',
 	args: false,
 	cooldown: 10,
 	execute(message, args, bot) {
@@ -14,16 +14,35 @@ module.exports = {
 		if (args[0] == '-r') {
 			args.shift();
 
-			if (!args[0].match(/https:\/\/(www.)?strawpoll.me\/[0-9]+/g)) {
-				bot.sendMessage('You must provide a proper strawpoll URL to read the results!');
+			const isURL = args[0].match(/https:\/\/(www.)?strawpoll.me\/[0-9]+/g);
+			const isID = args[0].match(/[0-9]+/g);
+
+			if (!isURL || !isID) {
+				bot.sendMessage('You must provide a proper strawpoll URL or strawpoll poll ID to read the results!');
 				return;
 			}
 
-			const pollNum = args.shift().split(/\//g).pop();
+			let pollNum;
+			
+			if (isURL) {
+				console.log('URL was provided'); // testing
+				pollNum = args.shift().split('/').pop();
+			} else if (isID) {
+				console.log('ID was provided'); // testing
+				pollNum = args.shift();
+			} else {
+				console.error('wtf? this shouldn\'t happen');
+				bot.sendMessage('something went seriously wrong, yo');
+				return;
+			}
+
+			console.log(pollNum); // testing
 
 			strawpoll.readPoll(pollNum).then(res => {
 				const results = _.zip(res.options, res.votes);
+				console.log('results:', results); // testing
 				results.sort((a, b) => a[1] < b[1]);
+				console.log('sorted results:', results); // testing
 
 				bot.sendMessage(`Winning result for ${res.title}: ${results[0][0]} with ${results[0][1]} votes.`);
 			}).catch(err => {
@@ -84,7 +103,7 @@ module.exports = {
 			multi: multi,
 		}).then(res => {
 			console.log(res);
-			bot.sendMessage('It worked, but I don\'t have any output for you.');
+			bot.sendMessage(`https://strawpoll.me/${res.id}`);
 		}).catch(err => {
 			console.error(err);
 			bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
