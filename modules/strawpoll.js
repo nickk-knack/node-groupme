@@ -17,7 +17,7 @@ module.exports = {
 			const isURL = args[0].match(/https:\/\/(www.)?strawpoll.me\/[0-9]+/g);
 			const isID = args[0].match(/[0-9]+/g);
 
-			if (!isURL || !isID) {
+			if (!(isURL || isID)) {
 				bot.sendMessage('You must provide a proper strawpoll URL or strawpoll poll ID to read the results!');
 				return;
 			}
@@ -39,6 +39,7 @@ module.exports = {
 			console.log(pollNum); // testing
 
 			strawpoll.readPoll(pollNum).then(res => {
+				console.log(res);
 				const results = _.zip(res.options, res.votes);
 				console.log('results:', results); // testing
 				results.sort((a, b) => a[1] < b[1]);
@@ -103,7 +104,11 @@ module.exports = {
 			multi: multi,
 		}).then(res => {
 			console.log(res);
-			bot.sendMessage(`https://strawpoll.me/${res.id}`);
+			if (res.id !== undefined) {
+				bot.sendMessage(`https://strawpoll.me/${res.id}`);
+			} else {
+				bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
+			}
 		}).catch(err => {
 			console.error(err);
 			bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
