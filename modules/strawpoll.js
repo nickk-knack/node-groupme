@@ -121,15 +121,21 @@ function create(args, bot) {
 		headers: {
 			'Content-Type': 'application/json',
 		},
-	}).then(res => JSON.parse(res)).then(json => {
-		if (json.id !== undefined) {
-			bot.sendMessage(`https://strawpoll.me/${json.id}`);
-		} else {
+	}, (err, res, body) => {
+		if (err) {
+			console.error(err);
 			bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
+			return;
 		}
-	}).catch(err => {
-		console.error(err);
-		bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
+
+		console.log(res);
+		console.log(body);
+
+		// if (body.id !== undefined) {
+		// 	bot.sendMessage(`https://strawpoll.me/${json.id}`);
+		// } else {
+		// 	bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
+		// }
 	});
 
 	// strawpoll.createPoll({
