@@ -32,6 +32,7 @@
     "request": "^2.88.0",
     "snekfetch": "^4.0.4",
     "strawpolljs": "^1.0.2",
+    "wikijs": "^4.13.0",
     "xml2js": "^0.4.19",
     "yandex-translate": "^2.1.2",
     "youtube-search": "^1.1.3"
