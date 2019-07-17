@@ -8,13 +8,15 @@ module.exports = {
 	execute(message, args, bot) {
 		const original = args.join(' ').trim();
 
+// maybe just convert whole thing to lower
+
                 let uwu = original.replace('R', 'w');
-                uwu = uwu.replace('r', 'w');
-                uwu = uwu.replace('L', 'w');
-                uwu = uwu.replace('l', 'w');
-                uwu = uwu.replace('ou', 'uw'); // this might be extra
-                uwu = uwu.replace(/\sth/g, 'd');
-                uwu = uwu.replace('th', 'f');
+                uwu = uwu.replace(/rR/g, 'w');
+                uwu = uwu.replace(/lL/g, 'w');
+                // add a case for first instance of a word that starts with Th (ignore case)
+                uwu = uwu.replace(/you/g, 'yuw'); // this might be extra
+                uwu = uwu.replace(/\sth/g, ' d');
+                uwu = uwu.replace(/th/g, 'f');
 
                 bot.sendMessage(`${uwu} uwu`);
         }
