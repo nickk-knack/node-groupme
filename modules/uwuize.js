@@ -9,12 +9,12 @@ module.exports = {
 		const original = args.join(' ').trim();
 
                 let uwu = original.replace('R', 'w');
-                uwu = original.replace('r', 'w');
-                uwu = original.replace('L', 'w');
-                uwu = original.replace('l', 'w');
-                uwu = original.replace('ou', 'uw'); // this might be extra
-                uwu = original.replace(/\sth/g, 'd');
-                uwu = original.replace('th', 'f');
+                uwu = uwu.replace('r', 'w');
+                uwu = uwu.replace('L', 'w');
+                uwu = uwu.replace('l', 'w');
+                uwu = uwu.replace('ou', 'uw'); // this might be extra
+                uwu = uwu.replace(/\sth/g, 'd');
+                uwu = uwu.replace('th', 'f');
 
                 bot.sendMessage(`${uwu} uwu`);
         }
