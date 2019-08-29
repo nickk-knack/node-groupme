@@ -5,6 +5,6 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
-		bot.sendMessage(args.push('👏').join('👏').toUpperCase());
+		bot.sendMessage(args.join('👏').toUpperCase());
 	},
 };
