@@ -6,8 +6,8 @@ module.exports = {
 	aliases: ['sp'],
 	description: 'Create a new strawpoll, or get the results of a strawpoll from a link.\n Surround the title with quotation marks. Options are seperated with a pipe ("|") character. Use the "-m" flag for allowing multiple answers.',
 	usage: '<"title"> <options> [-m] | <-r> <link | poll number>',
-	args: false,
-	cooldown: 10,
+	args: true,
+	cooldown: 5,
 	execute(message, args, bot) {
 		if (args[0] == '-r') {
 			read(args, bot);
@@ -108,11 +108,12 @@ function create(args, bot) {
 
 	// Create poll
 
+	// TODO: finish fixing this fucking mess
+
 	req({
 		method: 'POST',
 		uri: 'https://strawpoll.me/api/v2/polls',
 		followAllRedirects: true,
-		json: true,
 		body: {
 			title: title,
 			options: options,
@@ -128,7 +129,6 @@ function create(args, bot) {
 			return;
 		}
 
-		console.log(res);
 		console.log(body);
 
 		// if (body.id !== undefined) {

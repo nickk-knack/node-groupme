@@ -9,6 +9,7 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
+		// TODO: i don't think the + operator is right for this. probably need to change to a url formatted space (%20)
 		const query = args.join('+').trim();
 
 		snekfetch.get('https://rule34.xxx/index.php?page=dapi&s=post&q=index').query({ tags: query, limit: 20 })
