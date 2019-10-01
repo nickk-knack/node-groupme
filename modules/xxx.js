@@ -17,11 +17,27 @@ const lines = [
 	'PLEDGE BOYS STRIPPED NAKED, HUGE HARD COCKS AS HARD AS ROCKS',
 	'FRATJOCKS GUNNA FUCKNFUCKNFUK THOSE BOYES',
 	'𝐘𝐎𝐨𝐎𝐨𝐨𝐎𝐎𝐎!',
+'18 naked cowboys in the showers at ram ranch',
+'under lockdown!?!',
+'ram ranch is under siege!',
+'gonna find prince harry...',
+'gonna fuck prince harry\'s butt!',
+'big hard throbbing cock wanting to be sucked',
+'18 naked cowboys wanting to be fucked',
+'ram ranch REALLY rocks!',
+'cowboys in the showers at ram ranch!!',
+'ORGY in the showers at ram ranch!!!!!',
+'28 us marines pulling up in black ford raptor trucks',
+'yeah brennan!',
+'long dick brennan!',
+'gonna FUk those boys!!!',
+'cowboys LUV big haRd thrOBBing COKS!!!',
+'gonna fuk me sum cowboys!',
 ];
 
 module.exports = {
 	name: 'xxx',
-	description: 'Sends a random line from Grant MacDonald\'s hit song, Cumship (2019).',
+	description: 'Sends a random line from various Grant MacDonald hits.',
 	args: false,
 	cooldown: 1,
 	execute(message, args, bot) {
