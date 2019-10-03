@@ -13,10 +13,13 @@ const secretMessages = {
 		'alexa, add small black anal beads to my shopping list',
 		'"casually conservative"',
 		'ah yes, thats because algebra',
+		'my cat has aids 😂',
+		'ayyy john arbuckle whats crackalackin binglebanger',
 	],
 	23245751: [
 		'nick is a bitch',
-		'god nick sucks',
+		'high nick',
+		'danny rick lookin\' fucker',
 	],
 	37488539: [
 		'go photoshop a bigger dick on yourself, jake',
@@ -45,6 +48,7 @@ const secretMessages = {
 		'badabingbadaboom',
 		'O-oooooooooo AAAAE-A-A-I-A-U- JO-oooooooooooo AAE-O-A-A-U-U-A- E-eee-ee-eee AAAAE-A-E-I-E-A-JO-ooo-oo-oo-oo EEEEO-A-AAA-AAAA',
 		'you wanna hear a random signAAAaAALALAANFESNOVNSIUVBUOSEHUO#Y*R$HY*t8934try8943ry89438943wy89t43wh84e8',
+		'sSSSSS AAaAAA  R EWwE e eeE xDDDDDDDD',
 	],
 	8477170: [
 		'tik tok',
