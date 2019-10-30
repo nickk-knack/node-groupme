@@ -12,6 +12,16 @@ module.exports = {
 		const gmisUrl = 'https://image.groupme.com/pictures';
 
 		bot.request(catUrl).pipe(fs.createWriteStream('tempcat.png'));
+
+		fs.access('tempcat.png', fs.F_OK, (err) => {
+			if (err) {
+				console.error('tempcat.png did not save!', err);
+				bot.sendMessage('Failed to get a cat... 3:');
+				return;
+			}
+		});
+
+		console.log('I guess tempcat.png exists?');
 		const catBody = fs.createReadStream('tempcat.png');
 
 		const opts = {
@@ -26,12 +36,19 @@ module.exports = {
 
 		function reqCallback(error, response, body) {
 			if (!error && response.statusCode == 200) {
+				console.log(body);
 				bot.sendMessage(body.payload.url);
 				catBody.close();
 				fs.unlinkSync('tempcat.png');
+				return;
+			} else {
+				console.error(error);
 			}
 		}
 
+		console.log('Performing request...');
 		bot.request(opts, reqCallback);
+
+		console.log('uhh');
 	},
 };
