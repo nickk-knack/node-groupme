@@ -51,9 +51,8 @@ module.exports = {
 				body: buffer
 			}).then(resp => resp.json()).then(json => {
 				console.log('json response: ', json);
-				
+
 				bot.sendMessage(`@${message.name} ${randomMessage}`, json.payload.picture_url);
-				bot.sendMessage(json.payload.url);
 			});
 		});
 	},
