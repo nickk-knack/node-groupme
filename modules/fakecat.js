@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fetch = require('node-fetch');
 const GroupMeImageServiceAccessToken = process.env.GM_IMAGE_SERVICE_TOKEN;
 
 const messages = [
@@ -39,46 +39,22 @@ module.exports = {
 
 		const randomMessage = messages[Math.floor(Math.random() * messages.length)];
 
-		bot.request(catUrl).pipe(fs.createWriteStream('tempcat.png'));
+		fetch(catUrl).then(res => res.buffer()).then(buffer => {
+			console.log('Got cat image...');
 
-		fs.access('tempcat.png', fs.F_OK, (err) => {
-			if (err) {
-				console.error('tempcat.png did not save!', err);
-				bot.sendMessage('Failed to get a cat... 3:');
-				return;
-			}
-		});
-
-		const catBody = fs.createReadStream('tempcat.png');
-
-		const opts = {
-			url: gmisUrl,
-			method: 'POST',
-			headers: {
-				'X-Access-Token': GroupMeImageServiceAccessToken,
-				'Content-Type': 'image/png'
-			},
-			body: catBody
-		};
-
-		function reqCallback(error, response, body) {
-			if (!error && response.statusCode == 200) {
-				const json = JSON.parse(body);
-
-				console.log(json);
-
+			fetch(gmisUrl, {
+				method: 'POST',
+				headers: {
+					'X-Access-Token': GroupMeImageServiceAccessToken,
+					'Content-Type': 'image/png'
+				},
+				body: buffer
+			}).then(resp => resp.json()).then(json => {
+				console.log('json response: ', json);
+				
 				bot.sendMessage(`@${message.name} ${randomMessage}`, json.payload.picture_url);
 				bot.sendMessage(json.payload.url);
-
-				catBody.close();
-				fs.unlinkSync('tempcat.png');
-				return;
-			} else {
-				console.error(error);
-			}
-		}
-
-		console.log('Performing request...');
-		bot.request(opts, reqCallback);
+			});
+		});
 	},
 };
