@@ -67,7 +67,8 @@ module.exports = {
 
 				console.log(json);
 
-				bot.sendMessage(`@${message.name} ${randomMessage}`, body.payload.picture_url);
+				bot.sendMessage(`@${message.name} ${randomMessage}`, json.payload.picture_url);
+				bot.sendMessage(json.payload.url);
 
 				catBody.close();
 				fs.unlinkSync('tempcat.png');
