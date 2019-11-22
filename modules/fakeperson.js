@@ -1,5 +1,7 @@
-const fetch = require('node-fetch');
-const GroupMeImageServiceAccessToken = process.env.GM_IMAGE_SERVICE_TOKEN;
+// const fetch = require('node-fetch');
+// const GroupMeImageServiceAccessToken = process.env.GM_IMAGE_SERVICE_TOKEN;
+
+// nah, this just absolutely does not work. need to figure out how to scrape the image
 
 module.exports = {
 	name: 'fakeperson',
@@ -8,24 +10,25 @@ module.exports = {
 	args: false,
 	cooldown: 3,
 	execute(message, args, bot) {
-		const catUrl = 'https://thispersondoesnotexist.com/';
-		const gmisUrl = 'https://image.groupme.com/pictures';
+		// const personUrl = 'https://thispersondoesnotexist.com';
+		// const gmisUrl = 'https://image.groupme.com/pictures';
 
-		fetch(catUrl).then(res => res.buffer()).then(buffer => {
-			console.log('Got fake person...');
+		// fetch(personUrl).then(res => res.buffer()).then(buffer => {
+		// 	console.log('Got fake person...');
 
-			fetch(gmisUrl, {
-				method: 'POST',
-				headers: {
-					'X-Access-Token': GroupMeImageServiceAccessToken,
-					'Content-Type': 'image/png'
-				},
-				body: buffer
-			}).then(resp => resp.json()).then(json => {
-				console.log('json response: ', json);
+		// 	fetch(gmisUrl, {
+		// 		method: 'POST',
+		// 		headers: {
+		// 			'X-Access-Token': GroupMeImageServiceAccessToken,
+		// 			'Content-Type': 'image/jpg'
+		// 		},
+		// 		body: buffer
+		// 	}).then(resp => resp.json()).then(json => {
+		// 		console.log('json response: ', json);
 
-				bot.sendMessage('', json.payload.picture_url);
-			});
-		});
+		// 		bot.sendMessage('', json.payload.picture_url);
+		// 	});
+		// });
+		bot.sendMessage('sorry, that isnt ready yet.');
 	},
 };
