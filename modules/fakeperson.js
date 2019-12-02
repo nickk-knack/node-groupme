@@ -5,7 +5,7 @@
 
 module.exports = {
 	name: 'fakeperson',
-	aliases: ['fp', 'porson', 'porsen', 'persen', 'porsin', 'p', 'fakedude', ],
+	aliases: ['fp', 'porson', 'porsen', 'persen', 'porsin', 'fakedude', ],
 	description: 'Sends an AI generated person directly to chat.',
 	args: false,
 	cooldown: 3,
