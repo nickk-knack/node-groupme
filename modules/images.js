@@ -37,6 +37,7 @@ module.exports = {
 						
 						fetch(gmisUrl, settings)
 							.then(resp => resp.json())
+							// Here, I could add secret messages that happen based on the query
 							.then(json => bot.sendMessage('', json.payload.picture_url))
 							.catch(err => {
 								console.error('Failed to upload to GMIS, falling back to google link.', err);
