@@ -1,8 +1,6 @@
 const fetch = require('node-fetch');
 const GroupMeImageServiceAccessToken = process.env.GM_IMAGE_SERVICE_TOKEN;
 
-// nah, this just absolutely does not work. need to figure out how to scrape the image
-
 module.exports = {
 	name: 'fakeperson',
 	aliases: ['fp', 'porson', 'porsen', 'persen', 'porsin', 'fakedude', ],
@@ -29,6 +27,5 @@ module.exports = {
 				bot.sendMessage('', json.payload.picture_url);
 			});
 		});
-		// bot.sendMessage('sorry, that isnt ready yet.');
 	},
 };
