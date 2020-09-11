@@ -28,7 +28,7 @@
     "express": "^4.16.3",
     "google-images": "^2.1.0",
     "jimp": "^0.5.3",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "pornsearch": "^2.4.2",
     "request": "^2.88.0",
     "snekfetch": "^4.0.4",
