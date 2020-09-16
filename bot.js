@@ -53,10 +53,10 @@ const secretMessages = {
 };
 
 // Add a find function to the Map object (because it doesn't exist in vanilla JS for some reason)
-Map.prototype.find = (func) => {
+const find = (map, func) => {
 	if (typeof func === 'function') {
-		for (const [key, val] of this) {
-			if (func(val, key, this)) return val;
+		for (const [key, val] of map) {
+			if (func(val, key, map)) return val;
 		}
 
 		return null;
@@ -142,7 +142,7 @@ exports.onPost = (req, res) => {
 	const commandName = args.shift().toLowerCase();
 
 	// Get the actual command object, check if it exists
-	const command = commandModules.get(commandName); // || commandModules.find((cmd) => cmd.aliases && cmd.aliases.includes(commandName));
+	const command = commandModules.get(commandName) || find(commandModules, (cmd) => cmd.aliases && cmd.aliases.includes(commandName));
 	if (!command) {
 		bot.sendMessage('That command does not exist!');
 		res.end();
