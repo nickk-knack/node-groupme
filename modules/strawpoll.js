@@ -1,7 +1,7 @@
 const strawpoll = require('strawpolljs');
 const fetch = require('node-fetch');
 
-const read = async (args) => {
+const read = (args) => {
 	args.shift();
 
 	const isURL = args[0].match(/https:\/\/(?:www\.)?strawpoll.me\/\d+/giu);
@@ -21,29 +21,31 @@ const read = async (args) => {
 		throw new Error('Something went seriously wrong, yo. (got neither a url nor an id)');
 	}
 
-	try {
-		const response = await strawpoll.readPoll(pollNum);
-		const json = JSON.parse(response);
-		const topResult = {
-			result: '',
-			votes: 0,
-		};
-
-		for (let i = 0; i < json.votes.length; i++) {
-			if (json.votes[i] > topResult.votes) {
-				topResult.votes = json.votes[i];
-				topResult.result = json.options[i];
+	strawpoll.readPoll(pollNum)
+		.then((res) => JSON.parse(res))
+		.then((json) => {
+			const topResult = {
+				result: '',
+				votes: 0,
+			};
+	
+			for (let i = 0; i < json.votes.length; i++) {
+				if (json.votes[i] > topResult.votes) {
+					topResult.votes = json.votes[i];
+					topResult.result = json.options[i];
+				}
 			}
-		}
-
-		return `Winning result for "${json.title.trim()}": "${topResult.result.trim()}" with ${topResult.votes} votes.`;
-	} catch (err) {
-		throw new Error(`An error occurred while processing the read request! ${err}`);
-	}
+	
+			return `Winning result for "${json.title.trim()}": "${topResult.result.trim()}" with ${topResult.votes} votes.`;
+		})
+		.catch((err) => {
+			console.error(err);
+			return `An error occurred while processing the read request! ${err}`;
+		});
 };
 
 // untested
-const create = async (args) => {
+const create = (args) => {
 	// Title parsing
 	const titleArray = [];
 	if (!args[0].startsWith('"')) {
@@ -53,9 +55,9 @@ const create = async (args) => {
 	titleArray.push(args.shift());
 	while (!args[0].includes('"')) {
 		if (args.length) {
-		titleArray.push(args.shift());
+			titleArray.push(args.shift());
 		} else {
-		return 'Your title must be enclosed in quotation marks!';
+			return 'Your title must be enclosed in quotation marks!';
 		}
 	}
 
@@ -79,31 +81,30 @@ const create = async (args) => {
 
 	// Create poll
 	// TODO: test this mess
-	try {
-		const response = await fetch('https://strawpoll.me/api/v2/polls', {
-			method: 'POST',
-			redirect: 'follow',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: {
-				title: title,
-				options: options,
-				multi: multi,
-			},
+	fetch('https://strawpoll.me/api/v2/polls', {
+		method: 'POST',
+		redirect: 'follow',
+		headers: {
+			'Content-Type': 'application/json',
+		},
+		body: {
+			title: title,
+			options: options,
+			multi: multi,
+		},
+	})
+		.then((res) => res.json())
+		.then((json) => {
+			if (json.id) {
+				return `https://strawpoll.me/${json.id}`;
+			} else {
+				return 'something went wrong while creating that strawpoll...';
+			}
+		})
+		.catch((err) => {
+			console.error(err);
+			return `An error occurred while creating the strawpoll. (${err})`;
 		});
-		const json = await response.json();
-
-		// console.log(json);
-
-		if (json.id) {
-			return `https://strawpoll.me/${json.id}`;
-		} else {
-			return 'something went wrong while creating that strawpoll...';
-		}
-	} catch (error) {
-		throw new Error(`An error occurred while creating the strawpoll. (${error})`);
-	}
 
 	// strawpoll.createPoll({
 	// 	title: title,
@@ -129,9 +130,9 @@ module.exports = {
 	usage: '<"title"> <options> [-m] | <-r> <link | poll number>',
 	args: true,
 	cooldown: 5,
-	async execute(message, args, bot) {
+	execute(message, args, bot) {
 		const readFlag = args[0].toLowerCase();
-		const res = (readFlag === '-r') ? await read(args) : await create(args);
+		const res = (readFlag === '-r') ? read(args) : create(args);
 		bot.sendMessage(res);	
 	},
 };
