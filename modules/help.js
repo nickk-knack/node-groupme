@@ -23,7 +23,7 @@ module.exports = {
 			return bot.sendMessage(`Commands: ${commands.map(cmd => cmd.name).join(', ')}\n You can send ${prefix}help [command name] for info on a specific command.`);
 		}
 
-		const command = bot.commands.get(args[0]) || bot.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(args[0]));
+		const command = bot.commands.get(args[0]);
 
 		if (!command) {
 			return bot.sendMessage(`@${message.name} "${args[0]}" is not a valid command or alias!`);
