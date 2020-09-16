@@ -1,4 +1,6 @@
-const snekfetch = require('snekfetch');
+const querystring = require('querystring');
+const fetch = require('node-fetch');
+const { stripIndents } = require('common-tags');
 const trim = (str, max) => (str.length > max) ? `${str.slice(0, max - 3)}...` : str;
 
 module.exports = {
@@ -9,24 +11,24 @@ module.exports = {
 	args: true,
 	cooldown: 5,
 	execute(message, args, bot) {
-		snekfetch.get('https://api.urbandictionary.com/v0/define').query({ term: args.join(' ').trim() })
-			.then(data => data.body)
-			.then(body => {
-				if (body.result_type === 'no_results') {
-					bot.sendMessage(`No results found for **${args.join(' ')}**`);
-					return;
+		const query = querystring.stringify({ term: args.join(' ') });
+
+		fetch(`http://api.urbandictionary.com/v0/define?${query}`)
+			.then((res) => res.json())
+			.then((json) => {
+				if (!json.list.length) {
+					return bot.sendMessage(`No results found for **${args.join(' ')}**`);
 				}
 
-				const [answer] = body.list;
-				let msg = '';
-				msg += `${answer.word}: \n`;
-				msg += `Definition: ${trim(answer.definition, 512)}\n`;
-				msg += `Example: ${trim(answer.example, 256)}\n`;
-				bot.sendMessage(msg);
+				const answer = json.list[Math.floor(Math.random() * json.list.length)];
+
+				bot.sendMessage(stripIndents`${answer.word}: 
+											Definition: ${trim(answer.definition, 512)}
+											Example: ${trim(answer.example, 256)}`);
 			})
-			.catch(err => {
+			.catch((err) => {
 				console.error(err);
-				bot.sendMessage('That word could not be found!');
+				bot.sendMessage(`An error occurred while querying the API! (${err.message})`);
 			});
 	},
 };

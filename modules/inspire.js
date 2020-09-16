@@ -1,3 +1,5 @@
+const fetch = require('node-fetch');
+
 module.exports = {
 	name: 'inspire',
 	aliases: ['inspireme'],
@@ -5,13 +7,14 @@ module.exports = {
 	args: false,
 	cooldown: 3,
 	execute(message, args, bot) {
-		const url = 'http://inspirobot.me/api?generate=true';
-		bot.request.get(url, (err, resp, body) => {
-			if (err) {
-				bot.sendMessage('oopsie woopsie, something is fucky wucky UwU');
-			} else {
-				bot.sendMessage(body);
-			}
-		});
+		fetch('http://inspirobot.me/api?generate=true')
+			.then((res) => res.text())
+			.then((url) => {
+				bot.sendMessage(url);
+			})
+			.catch((err) => {
+				console.error(err);
+				bot.sendMessage(`oopsie woopsie, something is fucky wucky UwU [${err.message}]`);
+			});
 	},
 };

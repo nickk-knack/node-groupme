@@ -1,5 +1,6 @@
-const snekfetch = require('snekfetch');
-const parser = require('xml2js').parseString;
+const querystring = require('querystring');
+const fetch = require('node-fetch');
+const parser = require('xml2js').parseStringPromise;
 
 module.exports = {
 	name: 'rule34',
@@ -9,35 +10,32 @@ module.exports = {
 	args: true,
 	cooldown: 3,
 	execute(message, args, bot) {
-		// TODO: i don't think the + operator is right for this. probably need to change to a url formatted space (%20)
-		const query = args.join('+').trim();
+		const limit = 20;
+		const searchTerms = args.join('+');
 
-		snekfetch.get('https://rule34.xxx/index.php?page=dapi&s=post&q=index').query({ tags: query, limit: 20 })
-			.then(data => data.body)
-			.then(body => {
-				if (!body.length || body.success == false) {
-					bot.sendMessage(`No results found for ${query}`);
-					return;
-				}
+		const query = querystring.stringify({
+			page: 'dapi',
+			s: 'post',
+			q: 'index',
+			tags: searchTerms,
+			limit: limit,
+		});
 
-				parser(body.toString('utf8'), (err, result) => {
-					if (err) {
-						console.error(err);
-						bot.sendMessage('UwU sowwy something went wong... (XML parsing failed)');
-					}
+		fetch(`https://rule34.xxx/index.php?${query}`)
+			.then((res) => res.text())
+			.then((body) => parser(body.toString('utf8')))
+			.then((parsed) => JSON.parse(JSON.stringify(parsed)))
+			.then((json) => {
+				if (json.posts.$.count === '0') return bot.sendMessage(`No results found for ${query}`);
 
-					const json = JSON.parse(JSON.stringify(result));
-					const posts = json.posts.post;
+				const { post } = json.posts;
+				const fileUrl = post[Math.floor(Math.random() * post.length)].$.file_url;
 
-					const randIndex = Math.floor(Math.random() * posts.length);
-					const fileUrl = posts[randIndex].$.file_url;
-
-					bot.sendMessage(fileUrl);
-				});
+				bot.sendMessage(fileUrl);
 			})
-			.catch(e => {
-				console.error(e);
-				bot.sendMessage(`oopsie woopse, someone made a fuckie wuckie!! uwu [${e}]`);
+			.catch((err) => {
+				console.error(err);
+				bot.sendMessage(`oopsie woopse, someone made a fuckie wuckie!! uwu [${err.message}]`);
 			});
 	},
 };

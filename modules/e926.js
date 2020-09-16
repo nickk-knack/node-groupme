@@ -2,12 +2,12 @@ const querystring = require('querystring');
 const fetch = require('node-fetch');
 
 module.exports = {
-	name: 'e621',
-	aliases: ['e6'],
-	description: 'Search e621 for whatever tags you request.',
-	args: true,
+	name: 'e926',
+	aliases: ['e9'],
+	description: 'Searches e926 for whatever tags you request.',
 	usage: '<search tags>',
-	cooldown: 5,
+	args: true,
+	cooldown: 3,
 	execute(message, args, bot) {
 		const searchTerms = args.join(' ');
 		const length = 10;
@@ -24,7 +24,7 @@ module.exports = {
 			limit: length,
 		}).replace(/%20/gu, '+');
 
-		fetch(`https://e621.net/posts.json?${query}`, opts)
+		fetch(`https://e926.net/posts.json?${query}`, opts)
 			.then((res) => res.json())
 			.then((json) => {
 				const { posts } = json;

@@ -1,5 +1,5 @@
 const fs = require('fs');
-const req = require('request');
+const fetch = require('node-fetch');
 const prefix = process.env.PREFIX || '.';
 const commandModules = new Map();
 const commandFiles = fs.readdirSync('./modules');
@@ -50,10 +50,6 @@ const secretMessages = {
 		'you wanna hear a random signAAAaAALALAANFESNOVNSIUVBUOSEHUO#Y*R$HY*t8934try8943ry89438943wy89t43wh84e8',
 		'sSSSSS AAaAAA  R EWwE e eeE xDDDDDDDD',
 	],
-	8477170: [
-		'tik tok',
-		'chris big gay',
-	],
 };
 
 // Add a find function to the Map object (because it doesn't exist in vanilla JS for some reason)
@@ -71,7 +67,6 @@ Map.prototype.find = function (func) {
 
 // Bot object
 const bot = {
-	request: req,
 	api_url: 'https://api.groupme.com/v3/bots/',
 	bot_id: '',
 	group_id: '',
@@ -79,14 +74,12 @@ const bot = {
 	commands: commandModules,
 	sendMessage(text, picture_url = null) {
 		let data = `${bot.api_url}post?bot_id=${bot.bot_id}&text=${encodeURIComponent(text)}`;
+
 		if (picture_url != null) {
 			data += `&picture_url=${picture_url}`;
 		}
-		bot.request.post(data, (error) => {
-			if (error) {
-				console.error(error);
-			}
-		});
+
+		fetch(data, { method: 'POST' }).catch(console.error);
 	}
 };
 

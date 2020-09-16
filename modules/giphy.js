@@ -1,3 +1,4 @@
+const fetch = require('node-fetch');
 const limit = 10;
 
 module.exports = {
@@ -11,16 +12,22 @@ module.exports = {
 		const query = args.join(' ').trim();
 		const url = `http://api.giphy.com/v1/gifs/search?limit=${limit}&q=${encodeURIComponent(query)}&api_key=dc6zaTOxFJmzC`;
 
-		bot.request.get(url, (err, resp, body) => {
-			const results = JSON.parse(body)['data'];
-			const numResults = (results.length < limit) ? results.length : limit;
-			if (err || numResults == 0) {
-				bot.sendMessage(`Nothing found for "${query}"`);
-			} else {
-				const indexSelected = Math.floor(Math.random() * numResults);
-				const selected = results[indexSelected].images.original.url;
-				bot.sendMessage(selected);
-			}
-		});
+		fetch(url)
+			.then((res) => res.json())
+			.then((json) => {
+				const { data } = json;
+				const numResults = (data.length < limit) ? data.length : limit;
+
+				if (numResults === 0) {
+					return bot.sendMessage(`Nothing found for "${query}"`);
+				}
+
+				const selected = data[Math.floor(Math.random() * numResults)];
+				return bot.sendMessage(selected.images.original.url);
+			})
+			.catch((err) => {
+				console.error(err);
+				bot.sendMessage(`An error occurred while making the request. [${err.message}]`);
+			});
 	},
 };

@@ -1,142 +1,109 @@
 const strawpoll = require('strawpolljs');
-const req = require('request');
+const fetch = require('node-fetch');
 
-module.exports = {
-	name: 'strawpoll',
-	aliases: ['sp'],
-	description: 'Create a new strawpoll, or get the results of a strawpoll from a link.\n Surround the title with quotation marks. Options are seperated with a pipe ("|") character. Use the "-m" flag for allowing multiple answers.',
-	usage: '<"title"> <options> [-m] | <-r> <link | poll number>',
-	args: true,
-	cooldown: 5,
-	execute(message, args, bot) {
-		if (args[0] == '-r') {
-			read(args, bot);
-			return;
-		} else {
-			create(args, bot);
-		}		
-	},
-};
-
-function read(args, bot) {
+const read = async (args) => {
 	args.shift();
 
-	const isURL = args[0].match(/https:\/\/(www.)?strawpoll.me\/[0-9]+/g);
-	const isID = args[0].match(/[0-9]+/g);
+	const isURL = args[0].match(/https:\/\/(?:www\.)?strawpoll.me\/\d+/giu);
+	const isID = args[0].match(/\d+/giu);
 
 	if (!(isURL || isID)) {
-		bot.sendMessage('You must provide a proper strawpoll URL or strawpoll poll ID to read the results!');
-		return;
+		return 'You must provide a proper strawpoll URL or strawpoll poll ID to read the results!';
 	}
 
-	let pollNum;
+	let pollNum = '';
 
 	if (isURL) {
 		pollNum = args.shift().split('/').pop();
 	} else if (isID) {
 		pollNum = args.shift();
 	} else {
-		console.error('wtf? this shouldn\'t happen');
-		bot.sendMessage('something went seriously wrong, yo');
-		return;
+		throw new Error('Something went seriously wrong, yo. (got neither a url nor an id)');
 	}
 
-	strawpoll.readPoll(pollNum).then(res => {
-		const json = JSON.parse(res);
-
-		const topRes = {
+	try {
+		const response = await strawpoll.readPoll(pollNum);
+		const json = JSON.parse(response);
+		const topResult = {
 			result: '',
 			votes: 0,
 		};
 
 		for (let i = 0; i < json.votes.length; i++) {
-			if (json.votes[i] > topRes.votes) {
-				topRes.votes = json.votes[i];
-				topRes.result = json.options[i];
+			if (json.votes[i] > topResult.votes) {
+				topResult.votes = json.votes[i];
+				topResult.result = json.options[i];
 			}
 		}
 
-		bot.sendMessage(`Winning result for "${json.title.trim()}": "${topRes.result.trim()}" with ${topRes.votes} votes.`);
-	}).catch(err => {
-		console.error(err);
-		bot.sendMessage('An error occurred while processing the read request!');
-	});
-}
+		return `Winning result for "${json.title.trim()}": "${topResult.result.trim()}" with ${topResult.votes} votes.`;
+	} catch (err) {
+		throw new Error(`An error occurred while processing the read request! ${err}`);
+	}
+};
 
-function create(args, bot) {
+// untested
+const create = async (args) => {
 	// Title parsing
-
 	const titleArray = [];
-
 	if (!args[0].startsWith('"')) {
-		bot.sendMessage('Your title must be enclosed in quotation marks!');
-		return;
+		return 'Your title must be enclosed in quotation marks!';
 	}
 
 	titleArray.push(args.shift());
-
 	while (!args[0].includes('"')) {
 		if (args.length) {
-			titleArray.push(args.shift());
+		titleArray.push(args.shift());
 		} else {
-			bot.sendMessage('Your title must be enclosed in quotation marks!');
-			return;
+		return 'Your title must be enclosed in quotation marks!';
 		}
 	}
 
 	if (!args[0].includes('"')) {
-		bot.sendMessage('Your title must be enclosed in quotation marks!');
-		return;
+		return 'Your title must be enclosed in quotation marks!';
 	}
 
 	titleArray.push(args.shift());
-
 	if (!args.length) {
-		bot.sendMessage('You need to include some options with your poll!');
-		return;
+		return 'You need to include some options with your poll!';
 	}
 
 	const title = titleArray.join(' ');
 
 	// The rest of the command parsing (aka draw the rest of the fucking owl)
-
 	const multi = args.includes('-m');
-	args = args.filter(item => item != '-m');
-	const options = args.join(' ').split(/\s\|\s/g);
+	args = args.filter((item) => item != '-m');
+	const options = args.join(' ').split(/\s\|\s/gu);
 
-	console.log(title, multi, options);
+	// console.log(title, multi, options);
 
 	// Create poll
+	// TODO: test this mess
+	try {
+		const response = await fetch('https://strawpoll.me/api/v2/polls', {
+			method: 'POST',
+			redirect: 'follow',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: {
+				title: title,
+				options: options,
+				multi: multi,
+			},
+		});
+		const json = await response.json();
 
-	// TODO: finish fixing this fucking mess
+		// console.log(json);
 
-	req({
-		method: 'POST',
-		uri: 'https://strawpoll.me/api/v2/polls',
-		followAllRedirects: true,
-		body: {
-			title: title,
-			options: options,
-			mutli: multi,
-		},
-		headers: {
-			'Content-Type': 'application/json',
-		},
-	}, (err, res, body) => {
-		if (err) {
-			console.error(err);
-			bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
-			return;
+		if (json.id) {
+			return `https://strawpoll.me/${json.id}`;
+		} else {
+			return 'something went wrong while creating that strawpoll...';
 		}
-
-		console.log(body);
-
-		// if (body.id !== undefined) {
-		// 	bot.sendMessage(`https://strawpoll.me/${json.id}`);
-		// } else {
-		// 	bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
-		// }
-	});
+	} catch (error) {
+		throw new Error(`An error occurred while creating the strawpoll. (${error})`);
+	}
 
 	// strawpoll.createPoll({
 	// 	title: title,
@@ -153,4 +120,18 @@ function create(args, bot) {
 	// 	console.error(err);
 	// 	bot.sendMessage('Ruh roh, raggy! [Something went wrong processing that request...]');
 	// });
-}
+};
+
+module.exports = {
+	name: 'strawpoll',
+	aliases: ['sp'],
+	description: 'Create a new strawpoll, or get the results of a strawpoll from a link.\n Surround the title with quotation marks. Options are seperated with a pipe ("|") character. Use the "-m" flag for allowing multiple answers.',
+	usage: '<"title"> <options> [-m] | <-r> <link | poll number>',
+	args: true,
+	cooldown: 5,
+	async execute(message, args, bot) {
+		const readFlag = args[0].toLowerCase();
+		const res = (readFlag === '-r') ? await read(args) : await create(args);
+		bot.sendMessage(res);	
+	},
+};
