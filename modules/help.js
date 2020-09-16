@@ -9,19 +9,6 @@ Map.prototype.map = (fn, thisArg) => {
 	return arr;
 };
 
-Map.prototype.find = (func) => {
-	if (typeof func === 'function') {
-		for (const [key, val] of this) {
-			if (func(val, key, this)) return val;
-		}
-
-		return null;
-	}
-	else {
-		throw new Error('First argument must be a function.');
-	}
-};
-
 module.exports = {
 	name: 'help',
 	aliases: ['commands'],
