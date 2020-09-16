@@ -1,11 +1,25 @@
 const prefix = process.env.PREFIX || '.';
 
-Map.prototype.map = function (fn, thisArg) {
+// Add the map and find functions to the Map prototype
+Map.prototype.map = (fn, thisArg) => {
 	if (thisArg) fn = fn.bind(thisArg);
 	const arr = new Array(this.size);
 	let i = 0;
 	for (const [key, val] of this) arr[i++] = fn(val, key, this);
 	return arr;
+};
+
+Map.prototype.find = (func) => {
+	if (typeof func === 'function') {
+		for (const [key, val] of this) {
+			if (func(val, key, this)) return val;
+		}
+
+		return null;
+	}
+	else {
+		throw new Error('First argument must be a function.');
+	}
 };
 
 module.exports = {
@@ -17,31 +31,32 @@ module.exports = {
 	cooldown: 7,
 	execute(message, args, bot) {
 		const { commands } = bot;
+
 		if (!args.length) {
-			bot.sendMessage(`Commands: ${commands.map(cmd => cmd.name).join(', ')}\n You can send ${prefix}help [command name] for info on a specific command.`);
-		} else {
-			if (!bot.commands.has(args[0])) {
-				return bot.sendMessage(`@${message.name} "${args[0]}" is not a valid command!`);
-			}
-			
-			const command = bot.commands.get(args[0]);
-			let msg = `${command.name}:\n\n`;
-
-			if (command.description) {
-				msg += `${command.description}\n`;
-			}
-
-			if (command.aliases) {
-				msg += `Aliases: [${command.aliases.join(', ')}]\n`;
-			}
-
-			if (command.usage) {
-				msg += `Usage: ${prefix}${command.name} ${command.usage}\n`;
-			}
-
-			msg += `Cooldown: ${command.cooldown || 1} second(s).`;
-
-			bot.sendMessage(msg);
+			return bot.sendMessage(`Commands: ${commands.map(cmd => cmd.name).join(', ')}\n You can send ${prefix}help [command name] for info on a specific command.`);
 		}
+
+		const command = bot.commands.get(args[0]) || bot.commands.find((cmd) => cmd.aliases && cmd.aliases.includes(args[0]));
+
+		if (!command) {
+			return bot.sendMessage(`@${message.name} "${args[0]}" is not a valid command or alias!`);
+		}
+
+		let msg = `${command.name}:\n\n`;
+		if (command.description) {
+			msg += `${command.description}\n`;
+		}
+
+		if (command.aliases) {
+			msg += `Aliases: [${command.aliases.join(', ')}]\n`;
+		}
+
+		if (command.usage) {
+			msg += `Usage: ${prefix}${command.name} ${command.usage}\n`;
+		}
+
+		msg += `Cooldown: ${command.cooldown || 1} second(s).`;
+
+		return bot.sendMessage(msg);
 	},
 };
